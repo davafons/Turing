@@ -52,7 +52,7 @@ void Alphabet::reset() {
 /*!
  *  Check if the passed Symbol is in the alphabet.
  */
-bool Alphabet::isInAlphabet(Symbol symbol) { return std::regex_match(symbol, regex_); }
+bool Alphabet::contains(Symbol symbol) { return alphabet_symbols_.count(symbol); }
 
 /*!
  *  Add a new symbol to the Alphabet.

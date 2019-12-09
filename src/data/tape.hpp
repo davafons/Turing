@@ -102,15 +102,21 @@ template <int N, typename std::enable_if_t<(N == 1), int>>
 void Tape<nTracks>::write(Symbol symbol) {
   auto symbols = alphabet_.splitInSymbols(symbol);
 
-  if (symbols.size() == 1) {
-    mem_[tape_head_][0] = symbol;
-  } else {
+  if (!alphabet_.contains(symbol)) {
     throw std::runtime_error("Can't write Symbol " + symbol + ". Not in Alphabet.");
   }
+
+  mem_[tape_head_][0] = symbol;
 }
 
 template <int nTracks>
 void Tape<nTracks>::write(Cell cell) {
+  for (const auto &s : cell) {
+    if (!alphabet_.contains(s) && s != alphabet_.blank()) {
+      throw std::runtime_error("Can't write Symbol " + s + ". Not in Alphabet.");
+    }
+  }
+
   mem_[tape_head_] = cell;
 }
 

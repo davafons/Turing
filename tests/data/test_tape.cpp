@@ -180,10 +180,11 @@ TEST_F(MultipleTapeTest, WriteCorrectSymbol) {
   ASSERT_EQ(tape_.peek(), first_cell);
 }
 
-// TEST_F(MultipleTapeTest, WriteIncorrectSymbol) {
-//   ASSERT_EQ(tape_.peek(), "A");
-//
-//   ASSERT_THROW({ tape_.write({"%"}); }, std::runtime_error);
-// }
+TEST_F(MultipleTapeTest, WriteIncorrectSymbol) {
+  Tape<2>::Cell first_cell{"A", "C"};
+  ASSERT_TRUE(tape_.peek() == first_cell);
+
+  ASSERT_THROW({ tape_.write({"%", "$"}); }, std::runtime_error);
+}
 
 }  // namespace turing

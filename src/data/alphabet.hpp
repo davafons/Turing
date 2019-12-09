@@ -21,7 +21,7 @@ public:
 
   void reset();
 
-  bool isInAlphabet(Symbol symbol);
+  bool contains(Symbol symbol);
 
   void addSymbol(Symbol symbol);
   void addSymbols(const std::string &symbols_str);
