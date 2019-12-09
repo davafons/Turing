@@ -23,10 +23,10 @@ public:
   int size() const noexcept;
   int numTracks() const noexcept;
 
-  template <int N = nTracks, typename std::enable_if_t<N == 1, int> = 0>
+  template <int N = nTracks, typename std::enable_if_t<(N == 1), int> = 0>
   Symbol peek() const;
 
-  template <int N = nTracks, typename std::enable_if_t<N != 1, int> = 0>
+  template <int N = nTracks, typename std::enable_if_t<(N > 1), int> = 0>
   Column peek() const;
 
   void moveLeft();
@@ -76,7 +76,7 @@ template <int nTracks> int Tape<nTracks>::numTracks() const noexcept {
 }
 
 template <int nTracks>
-template <int N, typename std::enable_if_t<N == 1, int>>
+template <int N, typename std::enable_if_t<(N == 1), int>>
 Symbol Tape<nTracks>::peek() const {
   if (!mem_.count(tape_head_)) {
     return alphabet_.blank();
@@ -86,7 +86,7 @@ Symbol Tape<nTracks>::peek() const {
 }
 
 template <int nTracks>
-template <int N, typename std::enable_if_t<N != 1, int>>
+template <int N, typename std::enable_if_t<(N > 1), int>>
 typename Tape<nTracks>::Column Tape<nTracks>::peek() const {
   if (!mem_.count(tape_head_)) {
     Column col;
@@ -115,7 +115,7 @@ void Tape<nTracks>::setInputString(const std::string &input_str) {
   std::string line;
 
   int track_num = 0;
-  while (std::getline(line_stream, line)) {
+  while (std::getline(line_stream, line) && track_num < nTracks) {
 
     std::vector<Symbol> symbols = alphabet_.splitInSymbols(line);
 

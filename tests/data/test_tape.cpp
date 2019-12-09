@@ -66,4 +66,14 @@ TEST_F(SimpleTapeTest, SetInputString) {
   ASSERT_EQ(tape_.size(), 3);
 }
 
+TEST_F(SimpleTapeTest, SetBiggerInputString) {
+  tape_.alphabet().reset();
+  tape_.alphabet().addSymbols("X Y Z");
+
+  // Tape should ignore the second string of characters
+  tape_.setInputString("XYZ\nXYZ");
+
+  ASSERT_EQ(tape_.size(), 3);
+}
+
 } // namespace turing
