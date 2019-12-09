@@ -2,6 +2,7 @@
 
 #include <regex>
 #include <string>
+#include <unordered_set>
 #include <vector>
 
 #include "utils/utils.hpp"
@@ -28,11 +29,13 @@ public:
   friend std::ostream &operator<<(std::ostream &os, const Alphabet &alphabet);
 
 private:
-  std::string blank_{"b"};
-  std::string regex_str_{};
-  std::regex regex_;
+  std::string regexStr() const;
 
-  size_t size_{0};
+private:
+  std::string blank_{"b"};
+
+  std::regex regex_;
+  std::unordered_set<Symbol> alphabet_symbols_;
 };
 
 } // namespace turing

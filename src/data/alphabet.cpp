@@ -24,12 +24,12 @@ namespace turing {
 /*!
  *  Check if the alphabet is empty.
  */
-bool Alphabet::empty() const noexcept { return size_ == 0; }
+bool Alphabet::empty() const noexcept { return alphabet_symbols_.empty(); }
 
 /*!
  *  Return the size of the alphabet.
  */
-size_t Alphabet::size() const noexcept { return size_; }
+size_t Alphabet::size() const noexcept { return alphabet_symbols_.size(); }
 
 /*!
  *  Return the blank Symbol of the alphabet.
@@ -45,25 +45,19 @@ void Alphabet::setBlank(Symbol blank) { blank_ = blank; }
  *  Remove all symbols from the alphabet.
  */
 void Alphabet::reset() {
-  regex_str_ = "";
-  regex_ = std::regex(regex_str_);
-
-  size_ = 0;
+  alphabet_symbols_.clear();
+  regex_ = std::regex();
 }
 
 /*!
  *  Add a new symbol to the Alphabet.
  */
 void Alphabet::addSymbol(Symbol symbol) {
-  if (empty()) {
-    regex_str_ += symbol;
-  } else {
-    regex_str_ += "|" + symbol;
+  if (!alphabet_symbols_.count(symbol)) {
+    alphabet_symbols_.insert(symbol);
+
+    regex_ = std::regex(regexStr());
   }
-
-  regex_ = std::regex(regex_str_);
-
-  ++size_;
 }
 
 /*!
@@ -116,12 +110,29 @@ std::vector<Symbol> Alphabet::splitInSymbols(const std::string &symbols_str) {
  *  Print the content of the alphabet (Splitted by whitespaces)
  */
 std::ostream &operator<<(std::ostream &os, const Alphabet &alphabet) {
-  std::string alphabet_symbols(alphabet.regex_str_);
+  std::string alphabet_symbols(alphabet.regexStr());
   std::replace(alphabet_symbols.begin(), alphabet_symbols.end(), '|', ' ');
 
   os << alphabet_symbols;
 
   return os;
+}
+
+/*!
+ *  Transform the alphabet symbols to a regex expression (string).
+ */
+std::string Alphabet::regexStr() const {
+  std::string regex_str;
+
+  regex_str += *alphabet_symbols_.cbegin();
+
+  for (auto it = next(alphabet_symbols_.cbegin());
+       it != alphabet_symbols_.cend(); ++it) {
+
+    regex_str += "|" + *it;
+  }
+
+  return regex_str;
 }
 
 } // namespace turing

@@ -76,4 +76,21 @@ TEST_F(SimpleTapeTest, SetBiggerInputString) {
   ASSERT_EQ(tape_.size(), 3);
 }
 
+class MultipleTapeTest : public ::testing::Test {
+protected:
+  void SetUp() override {
+    tape_.alphabet().addSymbols("A B C");
+    tape_.setInputString("ABC\nCBA");
+  }
+
+  Tape<2> tape_;
+};
+
+TEST_F(MultipleTapeTest, InputStringConstructor) {
+  tape_ = Tape<2>("a b c\na b c");
+
+  ASSERT_EQ(tape_.alphabet().size(), 3);
+  ASSERT_EQ(tape_.size(), 3);
+}
+
 } // namespace turing
