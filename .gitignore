@@ -1,0 +1,28 @@
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+*.a
+*.gcov
+*.gcov_tmp
+build/
+_deps/
+bin/
+
+# Project
+turing
+
+
+# Testing
+googletest/
+Testing/
+CTestTestfile.cmake
+test
+
+# Vim
+*.plist
+tags
+*.swp
+*~
