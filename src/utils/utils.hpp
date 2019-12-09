@@ -22,19 +22,4 @@ public:
   static std::string nextLine(std::ifstream &file_stream);
 };
 
-template <size_t I, typename T> struct tuple_n {
-  template <typename... Args>
-
-  using type = typename tuple_n<I - 1, T>::template type<T, Args...>;
-};
-
-template <typename T> struct tuple_n<0, T> {
-  template <typename... Args> using type = std::tuple<Args...>;
-};
-
-template <size_t I, typename T>
-using tuple_of = typename tuple_n<I, T>::template type<>;
-
-// Use: tuple_of<3, double> => "Tuple of 3 doubles"
-
 } // namespace turing

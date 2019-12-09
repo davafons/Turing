@@ -15,6 +15,9 @@ public:
   bool empty() const noexcept;
   size_t size() const noexcept;
 
+  Symbol blank() const noexcept;
+  void setBlank(Symbol blank);
+
   void reset();
 
   void addSymbol(Symbol symbol);
@@ -25,7 +28,8 @@ public:
   friend std::ostream &operator<<(std::ostream &os, const Alphabet &alphabet);
 
 private:
-  std::string regex_str_{"\\" + Utils::lambda};
+  std::string blank_{"b"};
+  std::string regex_str_{};
   std::regex regex_;
 
   size_t size_{0};

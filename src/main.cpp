@@ -5,7 +5,7 @@
 int main() {
   std::cout << "Turing" << std::endl;
 
-  turing::Tape<int, 3> tape;
+  turing::Tape<3> tape;
 
   return 0;
 }

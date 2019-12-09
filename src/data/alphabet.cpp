@@ -19,7 +19,6 @@ namespace turing {
  *  (Also, note how even if the string doesn't has spaces, the symbol BD is
  * recognized as a whole)
  *
- *  By default, all alphabets include the Lambda symbol.
  */
 
 /*!
@@ -33,10 +32,20 @@ bool Alphabet::empty() const noexcept { return size_ == 0; }
 size_t Alphabet::size() const noexcept { return size_; }
 
 /*!
- *  Remove all symbols from the alphabet (leaving only the lambda).
+ *  Return the blank Symbol of the alphabet.
+ */
+Symbol Alphabet::blank() const noexcept { return blank_; }
+
+/*!
+ *  Set a new blank Symbol to the alphabet.
+ */
+void Alphabet::setBlank(Symbol blank) { blank_ = blank; }
+
+/*!
+ *  Remove all symbols from the alphabet.
  */
 void Alphabet::reset() {
-  regex_str_ = "\\" + Utils::lambda;
+  regex_str_ = "";
   regex_ = std::regex(regex_str_);
 
   size_ = 0;
@@ -46,7 +55,11 @@ void Alphabet::reset() {
  *  Add a new symbol to the Alphabet.
  */
 void Alphabet::addSymbol(Symbol symbol) {
-  regex_str_ += "|" + symbol;
+  if (empty()) {
+    regex_str_ += symbol;
+  } else {
+    regex_str_ += "|" + symbol;
+  }
 
   regex_ = std::regex(regex_str_);
 
@@ -75,7 +88,7 @@ std::vector<Symbol> Alphabet::splitInSymbols(const std::string &symbols_str) {
   auto check_sticky = [](int init_pos, int end_pos,
                          const std::string &symbols_str) {
     if (init_pos != end_pos) {
-      std::cout << "WARGNING! Unrecognized symbol: "
+      std::cout << "WARNING! Unrecognized symbol: "
                 << symbols_str.substr(init_pos, end_pos - init_pos)
                 << std::endl;
     }
