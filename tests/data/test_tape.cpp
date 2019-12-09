@@ -51,4 +51,10 @@ TEST_F(SimpleTapeTest, Move) {
   ASSERT_EQ(tape_.peek(), tape_.alphabet().blank());
 }
 
+TEST_F(SimpleTapeTest, Reset) {
+  tape_.reset();
+
+  ASSERT_EQ(tape_.size(), 0);
+}
+
 } // namespace turing
