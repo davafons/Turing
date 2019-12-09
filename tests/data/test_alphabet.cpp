@@ -18,6 +18,16 @@ TEST_F(AlphabetTest, Reset) {
   ASSERT_TRUE(alphabet_.empty());
 }
 
+TEST_F(AlphabetTest, Contains) {
+  ASSERT_TRUE(alphabet_.contains("a"));
+  ASSERT_TRUE(alphabet_.contains("b"));
+}
+
+TEST_F(AlphabetTest, NotContains) {
+  ASSERT_FALSE(alphabet_.contains("1"));
+  ASSERT_FALSE(alphabet_.contains("%"));
+}
+
 TEST_F(AlphabetTest, SplitInSymbols) {
   // Alphabet has "a b c" symbols
   auto symbols = alphabet_.splitInSymbols("abc");
@@ -50,4 +60,4 @@ TEST_F(AlphabetTest, addSymbols) {
   ASSERT_EQ(symbols[1], "Y");
 }
 
-} // namespace turing
+}  // namespace turing
