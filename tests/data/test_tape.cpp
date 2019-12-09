@@ -93,4 +93,82 @@ TEST_F(MultipleTapeTest, InputStringConstructor) {
   ASSERT_EQ(tape_.size(), 3);
 }
 
+TEST_F(MultipleTapeTest, SetInputString) {
+  tape_.alphabet().reset();
+  tape_.alphabet().addSymbols("X Y Z");
+
+  tape_.setInputString("XYZ\nZYX");
+  ASSERT_EQ(tape_.size(), 3);
+
+  // Check first column
+  auto column = tape_.peek();
+
+  ASSERT_EQ(column.size(), 2);
+  ASSERT_EQ(column[0], "X");
+  ASSERT_EQ(column[1], "Z");
+
+  // Check second column
+  tape_.moveRight();
+  column = tape_.peek();
+
+  ASSERT_EQ(column.size(), 2);
+  ASSERT_EQ(column[0], "Y");
+  ASSERT_EQ(column[1], "Y");
+
+  // Check third column
+  tape_.moveRight();
+  column = tape_.peek();
+
+  ASSERT_EQ(column.size(), 2);
+  ASSERT_EQ(column[0], "Z");
+  ASSERT_EQ(column[1], "X");
+
+  // Check fourth column (out of bounds)
+  tape_.moveRight();
+  column = tape_.peek();
+
+  ASSERT_EQ(column.size(), 2);
+  ASSERT_EQ(column[0], tape_.alphabet().blank());
+  ASSERT_EQ(column[1], tape_.alphabet().blank());
+}
+
+TEST_F(MultipleTapeTest, SetInputStringMissingValues) {
+  tape_.alphabet().reset();
+  tape_.alphabet().addSymbols("X Y Z");
+
+  tape_.setInputString("X---\nZYX-");
+  ASSERT_EQ(tape_.size(), 3);
+
+  // Check first column
+  auto column = tape_.peek();
+
+  ASSERT_EQ(column.size(), 2);
+  ASSERT_EQ(column[0], "X");
+  ASSERT_EQ(column[1], "Z");
+
+  // Check second column
+  tape_.moveRight();
+  column = tape_.peek();
+
+  ASSERT_EQ(column.size(), 2);
+  ASSERT_EQ(column[0], tape_.alphabet().blank());
+  ASSERT_EQ(column[1], "Y");
+
+  // Check third column
+  tape_.moveRight();
+  column = tape_.peek();
+
+  ASSERT_EQ(column.size(), 2);
+  ASSERT_EQ(column[0], tape_.alphabet().blank());
+  ASSERT_EQ(column[1], "X");
+
+  // Check fourth column (out of bounds)
+  tape_.moveRight();
+  column = tape_.peek();
+
+  ASSERT_EQ(column.size(), 2);
+  ASSERT_EQ(column[0], tape_.alphabet().blank());
+  ASSERT_EQ(column[1], tape_.alphabet().blank());
+}
+
 } // namespace turing
