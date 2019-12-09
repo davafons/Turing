@@ -21,6 +21,8 @@ public:
 
   void reset();
 
+  bool isInAlphabet(Symbol symbol);
+
   void addSymbol(Symbol symbol);
   void addSymbols(const std::string &symbols_str);
 

@@ -50,6 +50,11 @@ void Alphabet::reset() {
 }
 
 /*!
+ *  Check if the passed Symbol is in the alphabet.
+ */
+bool Alphabet::isInAlphabet(Symbol symbol) { return std::regex_match(symbol, regex_); }
+
+/*!
  *  Add a new symbol to the Alphabet.
  */
 void Alphabet::addSymbol(Symbol symbol) {
@@ -79,20 +84,16 @@ std::vector<Symbol> Alphabet::splitInSymbols(const std::string &symbols_str) {
 
   // Prints a warning message if a symbol was skipped due to not being on the
   // Alphabet.
-  auto check_sticky = [](int init_pos, int end_pos,
-                         const std::string &symbols_str) {
+  auto check_sticky = [](int init_pos, int end_pos, const std::string &symbols_str) {
     if (init_pos != end_pos) {
       std::cout << "WARNING! Unrecognized symbol: "
-                << symbols_str.substr(init_pos, end_pos - init_pos)
-                << std::endl;
+                << symbols_str.substr(init_pos, end_pos - init_pos) << std::endl;
     }
   };
 
   int current_pos = 0;
-  for (auto it =
-           std::sregex_iterator(symbols_str.begin(), symbols_str.end(), regex_);
+  for (auto it = std::sregex_iterator(symbols_str.begin(), symbols_str.end(), regex_);
        it != std::sregex_iterator(); ++it) {
-
     // Push the current match to the symbols vector
     matches.push_back(it->str());
 
@@ -126,13 +127,12 @@ std::string Alphabet::regexStr() const {
 
   regex_str += *alphabet_symbols_.cbegin();
 
-  for (auto it = next(alphabet_symbols_.cbegin());
-       it != alphabet_symbols_.cend(); ++it) {
-
+  for (auto it = next(alphabet_symbols_.cbegin()); it != alphabet_symbols_.cend();
+       ++it) {
     regex_str += "|" + *it;
   }
 
   return regex_str;
 }
 
-} // namespace turing
+}  // namespace turing

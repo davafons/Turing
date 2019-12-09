@@ -1,6 +1,5 @@
-#include "gtest/gtest.h"
-
 #include "data/tape.hpp"
+#include "gtest/gtest.h"
 
 namespace turing {
 
@@ -62,6 +61,20 @@ TEST_F(SimpleTapeTest, SetBiggerInputString) {
 
   // Tape should ignore the second string of characters
   tape_.setInputString("XYZ\nXYZ");
+}
+
+TEST_F(SimpleTapeTest, WriteCorrectSymbol) {
+  ASSERT_EQ(tape_.peek(), "A");
+
+  tape_.write("C");
+
+  ASSERT_EQ(tape_.peek(), "C");
+}
+
+TEST_F(SimpleTapeTest, WriteIncorrectSymbol) {
+  ASSERT_EQ(tape_.peek(), "A");
+
+  ASSERT_THROW({ tape_.write("%"); }, std::runtime_error);
 }
 
 class MultipleTapeTest : public ::testing::Test {
@@ -156,4 +169,21 @@ TEST_F(MultipleTapeTest, SetInputStringMissingValues) {
   ASSERT_EQ(column[1], tape_.alphabet().blank());
 }
 
-} // namespace turing
+TEST_F(MultipleTapeTest, WriteCorrectSymbol) {
+  Tape<2>::Cell first_cell{"A", "C"};
+  ASSERT_TRUE(tape_.peek() == first_cell);
+
+  tape_.write({"C", "B"});
+  first_cell[0] = "C";
+  first_cell[1] = "B";
+
+  ASSERT_EQ(tape_.peek(), first_cell);
+}
+
+// TEST_F(MultipleTapeTest, WriteIncorrectSymbol) {
+//   ASSERT_EQ(tape_.peek(), "A");
+//
+//   ASSERT_THROW({ tape_.write({"%"}); }, std::runtime_error);
+// }
+
+}  // namespace turing
