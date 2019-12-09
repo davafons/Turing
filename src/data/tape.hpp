@@ -23,7 +23,26 @@ public:
   int size() const noexcept;
   int numTracks() const noexcept;
 
-  Column peek() const;
+  template <int N = nTracks, typename std::enable_if_t<N != 1, int> = 0>
+  Column peek() const {
+    if (!mem_.count(tape_head_)) {
+      Column col;
+      col.fill(alphabet_.blank());
+
+      return col;
+    }
+
+    return mem_.at(tape_head_);
+  }
+  template <int N = nTracks, typename std::enable_if_t<N == 1, int> = 0>
+  Symbol peek() const {
+    if (!mem_.count(tape_head_)) {
+      return alphabet_.blank();
+    }
+
+    return mem_.at(tape_head_)[0];
+  }
+
   void moveLeft();
   void moveRight();
 
@@ -56,6 +75,12 @@ Tape<nTracks>::Tape(const std::string &input_str,
   setInputString(input_str);
 }
 
+template <int nTracks> Alphabet &Tape<nTracks>::alphabet() { return alphabet_; }
+
+template <int nTracks> const Alphabet &Tape<nTracks>::alphabet() const {
+  return alphabet_;
+}
+
 template <int nTracks> int Tape<nTracks>::size() const noexcept {
   return mem_.size();
 }
@@ -64,17 +89,15 @@ template <int nTracks> int Tape<nTracks>::numTracks() const noexcept {
   return nTracks;
 }
 
-template <int nTracks>
-typename Tape<nTracks>::Column Tape<nTracks>::peek() const {
-  if (!mem_.count(tape_head_)) {
-    Column col{nTracks};
-    col.fill(alphabet_.blank());
-
-    return col;
-  }
-
-  return mem_[tape_head_];
-}
+// template <int nTracks>
+// typename Tape<nTracks>::Column
+// Tape<nTracks>::peek(typename std::enable_if<nTracks != 1>::type *) const {
+// }
+//
+// template <int nTracks>
+// Symbol
+// Tape<nTracks>::peek(typename std::enable_if<nTracks == 1>::type *) const {
+// }
 
 template <int nTracks> void Tape<nTracks>::moveLeft() { --tape_head_; }
 
@@ -94,6 +117,7 @@ void Tape<nTracks>::setInputString(const std::string &input_str) {
 
   int track_num = 0;
   while (std::getline(line_stream, line)) {
+
     std::vector<Symbol> symbols = alphabet_.splitInSymbols(line);
 
     for (int i = 0; i < symbols.size(); ++i) {
