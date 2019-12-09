@@ -20,7 +20,6 @@ public:
   Alphabet &alphabet();
   const Alphabet &alphabet() const;
 
-  int size() const noexcept;
   int numTracks() const noexcept;
 
   template <int N = nTracks, typename std::enable_if_t<(N == 1), int> = 0>
@@ -74,10 +73,6 @@ template <int nTracks> Alphabet &Tape<nTracks>::alphabet() { return alphabet_; }
 
 template <int nTracks> const Alphabet &Tape<nTracks>::alphabet() const {
   return alphabet_;
-}
-
-template <int nTracks> int Tape<nTracks>::size() const noexcept {
-  return mem_.size();
 }
 
 template <int nTracks> int Tape<nTracks>::numTracks() const noexcept {

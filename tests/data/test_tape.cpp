@@ -18,17 +18,13 @@ TEST_F(SimpleTapeTest, InputStringConstructor) {
   tape_ = Tape<1>("a b c");
 
   ASSERT_EQ(tape_.alphabet().size(), 3);
-  ASSERT_EQ(tape_.size(), 3);
 }
 
 TEST_F(SimpleTapeTest, AlphabetConstructor) {
   tape_ = Tape<1>("a b c", "a b");
 
   ASSERT_EQ(tape_.alphabet().size(), 2);
-  ASSERT_EQ(tape_.size(), 2);
 }
-
-TEST_F(SimpleTapeTest, Size) { ASSERT_EQ(tape_.size(), 2); }
 
 TEST_F(SimpleTapeTest, Peek) { ASSERT_EQ(tape_.peek(), "A"); }
 
@@ -51,19 +47,13 @@ TEST_F(SimpleTapeTest, Move) {
   ASSERT_EQ(tape_.peek(), tape_.alphabet().blank());
 }
 
-TEST_F(SimpleTapeTest, Reset) {
-  tape_.reset();
-
-  ASSERT_EQ(tape_.size(), 0);
-}
+TEST_F(SimpleTapeTest, Reset) { tape_.reset(); }
 
 TEST_F(SimpleTapeTest, SetInputString) {
   tape_.alphabet().reset();
   tape_.alphabet().addSymbols("X Y Z");
 
   tape_.setInputString("XYZ");
-
-  ASSERT_EQ(tape_.size(), 3);
 }
 
 TEST_F(SimpleTapeTest, SetBiggerInputString) {
@@ -72,8 +62,6 @@ TEST_F(SimpleTapeTest, SetBiggerInputString) {
 
   // Tape should ignore the second string of characters
   tape_.setInputString("XYZ\nXYZ");
-
-  ASSERT_EQ(tape_.size(), 3);
 }
 
 class MultipleTapeTest : public ::testing::Test {
@@ -90,7 +78,6 @@ TEST_F(MultipleTapeTest, InputStringConstructor) {
   tape_ = Tape<2>("a b c\na b c");
 
   ASSERT_EQ(tape_.alphabet().size(), 3);
-  ASSERT_EQ(tape_.size(), 3);
 }
 
 TEST_F(MultipleTapeTest, SetInputString) {
@@ -98,7 +85,6 @@ TEST_F(MultipleTapeTest, SetInputString) {
   tape_.alphabet().addSymbols("X Y Z");
 
   tape_.setInputString("XYZ\nZYX");
-  ASSERT_EQ(tape_.size(), 3);
 
   // Check first column
   auto column = tape_.peek();
@@ -137,7 +123,6 @@ TEST_F(MultipleTapeTest, SetInputStringMissingValues) {
   tape_.alphabet().addSymbols("X Y Z");
 
   tape_.setInputString("X---\nZYX-");
-  ASSERT_EQ(tape_.size(), 3);
 
   // Check first column
   auto column = tape_.peek();
