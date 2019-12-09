@@ -30,19 +30,19 @@ TEST_F(SimpleTapeTest, Peek) { ASSERT_EQ(tape_.peek(), "A"); }
 TEST_F(SimpleTapeTest, Move) {
   ASSERT_EQ(tape_.peek(), "A");
 
-  tape_.moveRight();
+  tape_.move(Direction::Right);
   ASSERT_EQ(tape_.peek(), "B");
 
-  tape_.moveRight();
+  tape_.move(Direction::Right);
   ASSERT_EQ(tape_.peek(), tape_.alphabet().blank());
 
-  tape_.moveLeft();
+  tape_.move(Direction::Left);
   ASSERT_EQ(tape_.peek(), "B");
 
-  tape_.moveLeft();
+  tape_.move(Direction::Left);
   ASSERT_EQ(tape_.peek(), "A");
 
-  tape_.moveLeft();
+  tape_.move(Direction::Left);
   ASSERT_EQ(tape_.peek(), tape_.alphabet().blank());
 }
 
@@ -107,7 +107,7 @@ TEST_F(MultipleTapeTest, SetInputString) {
   ASSERT_EQ(column[1], "Z");
 
   // Check second column
-  tape_.moveRight();
+  tape_.move(Direction::Right);
   column = tape_.peek();
 
   ASSERT_EQ(column.size(), 2);
@@ -115,7 +115,7 @@ TEST_F(MultipleTapeTest, SetInputString) {
   ASSERT_EQ(column[1], "Y");
 
   // Check third column
-  tape_.moveRight();
+  tape_.move(Direction::Right);
   column = tape_.peek();
 
   ASSERT_EQ(column.size(), 2);
@@ -123,7 +123,7 @@ TEST_F(MultipleTapeTest, SetInputString) {
   ASSERT_EQ(column[1], "X");
 
   // Check fourth column (out of bounds)
-  tape_.moveRight();
+  tape_.move(Direction::Right);
   column = tape_.peek();
 
   ASSERT_EQ(column.size(), 2);
@@ -145,7 +145,7 @@ TEST_F(MultipleTapeTest, SetInputStringMissingValues) {
   ASSERT_EQ(column[1], "Z");
 
   // Check second column
-  tape_.moveRight();
+  tape_.move(Direction::Right);
   column = tape_.peek();
 
   ASSERT_EQ(column.size(), 2);
@@ -153,7 +153,7 @@ TEST_F(MultipleTapeTest, SetInputStringMissingValues) {
   ASSERT_EQ(column[1], "Y");
 
   // Check third column
-  tape_.moveRight();
+  tape_.move(Direction::Right);
   column = tape_.peek();
 
   ASSERT_EQ(column.size(), 2);
@@ -161,7 +161,7 @@ TEST_F(MultipleTapeTest, SetInputStringMissingValues) {
   ASSERT_EQ(column[1], "X");
 
   // Check fourth column (out of bounds)
-  tape_.moveRight();
+  tape_.move(Direction::Right);
   column = tape_.peek();
 
   ASSERT_EQ(column.size(), 2);
