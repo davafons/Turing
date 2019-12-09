@@ -57,4 +57,13 @@ TEST_F(SimpleTapeTest, Reset) {
   ASSERT_EQ(tape_.size(), 0);
 }
 
+TEST_F(SimpleTapeTest, SetInputString) {
+  tape_.alphabet().reset();
+  tape_.alphabet().addSymbols("X Y Z");
+
+  tape_.setInputString("XYZ");
+
+  ASSERT_EQ(tape_.size(), 3);
+}
+
 } // namespace turing
