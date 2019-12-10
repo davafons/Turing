@@ -91,14 +91,14 @@ void Turing::addStates(const std::vector<std::string>& state_names) {
 }
 
 void Turing::addTransition(const std::string& start_state_name,
-                           const Cell& input_symbols,
+                           const std::vector<Cell>& input_symbols,
                            const std::string& end_state_name,
-                           const Cell& output_symbols,
-                           const Move& movement) {
+                           const std::vector<Cell>& output_symbols,
+                           const std::vector<Move>& moves) {
 
   state(start_state_name)
       ->addTransition(
-          Transition(input_symbols, state(end_state_name), output_symbols, movement));
+          Transition(input_symbols, state(end_state_name), output_symbols, moves));
 }
 
 // Turing Machine
@@ -110,10 +110,15 @@ void Turing::toggleDebugMode(bool toggle) {
 }
 
 bool Turing::run(const std::string& input_string) {
-  // Split input string, fill tape with symbols
-
+  // Fill initial tape with input string
   tapes_[0].setInputString(input_string);
 
+  std::cout << *this << std::endl;
+
+  return true;
+}
+
+bool Turing::run(State* current_state, std::vector<Tape>& tapes) {
   return true;
 }
 

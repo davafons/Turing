@@ -14,19 +14,19 @@ class State;
 class Transition {
 public:
   Transition() = default;
-  Transition(const Cell& input_symbols,
+  Transition(const std::vector<Cell>& input_symbols,
              State* next_state,
-             const Cell& output_symbols,
-             const Move& movement);
+             const std::vector<Cell>& output_symbols,
+             const std::vector<Move>& moves);
 
-  Cell inputSymbols() const;
-  Cell outputSymbols() const;
+  std::vector<Cell> inputSymbols() const;
+  std::vector<Cell> outputSymbols() const;
 
-  Move movement() const;
+  std::vector<Move> moves() const;
 
   std::string nextStateName() const;
 
-  State* nextState(Tape& current_tape) const;
+  State* nextState(std::vector<Tape>& tapes) const;
 
   std::string str() const;
 
@@ -35,10 +35,10 @@ public:
   friend std::ostream& operator<<(std::ostream& os, const Transition& t);
 
 private:
-  Cell input_symbols_{};
+  std::vector<Cell> input_symbols_{};
   State* next_state_{nullptr};
-  Cell output_symbols_{};
-  Move movement_{Move::Stop};
+  std::vector<Cell> output_symbols_{};
+  std::vector<Move> moves_{Move::Stop};
 };
 
 }  // namespace turing

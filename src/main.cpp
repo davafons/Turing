@@ -3,7 +3,7 @@
 #include "core/turing.hpp"
 
 int main() {
-  turing::Turing machine;
+  turing::Turing machine(1, 2);
 
   machine.addStates({"q0", "q1", "q2"});
   machine.inputAlphabet().addSymbols({"0", "1"});
@@ -14,11 +14,46 @@ int main() {
 
   machine.setFinalStates({"q2"});
 
-  machine.addTransition("q0", {"0"}, "q1", {"0"}, turing::Move::Right);
-  machine.addTransition("q0", {"1"}, "q0", {"1"}, turing::Move::Right);
-  machine.addTransition("q1", {"0"}, "q0", {"0"}, turing::Move::Right);
-  machine.addTransition("q1", {"1"}, "q1", {"1"}, turing::Move::Right);
-  machine.addTransition("q1", {"."}, "q2", {"."}, turing::Move::Right);
+  // Multi track example
+  machine.addTransition("q0", {{"0", "0"}}, "q1", {{"0", "1"}}, {turing::Move::Right});
+  machine.addTransition("q0", {{"0", "0"}}, "q1", {{"0", "0"}}, {turing::Move::Right});
+  machine.addTransition("q0", {{"0", "1"}}, "q1", {{"0", "0"}}, {turing::Move::Right});
+  machine.addTransition("q0", {{"1", "1"}}, "q0", {{"1", "."}}, {turing::Move::Right});
+  machine.addTransition("q1", {{"0", "0"}}, "q0", {{"0", "."}}, {turing::Move::Right});
+  machine.addTransition("q1", {{"1", "1"}}, "q1", {{"1", "1"}}, {turing::Move::Right});
+  machine.addTransition("q1", {{".", "."}}, "q2", {{".", "."}}, {turing::Move::Right});
+
+  // // Multi tape example
+  // machine.addTransition("q0",
+  //                       {{"0"}, {"0"}},
+  //                       "q1",
+  //                       {{"0"}, {"1"}},
+  //                       {turing::Move::Right, turing::Move::Left});
+  // machine.addTransition("q0",
+  //                       {{"0"}, {"1"}},
+  //                       "q1",
+  //                       {{"0"}, {"0"}},
+  //                       {turing::Move::Right, turing::Move::Stop});
+  // machine.addTransition("q0",
+  //                       {{"1"}, {"."}},
+  //                       "q0",
+  //                       {{"1"}, {"1"}},
+  //                       {turing::Move::Right, turing::Move::Stop});
+  // machine.addTransition("q1",
+  //                       {{"0"}, {"."}},
+  //                       "q0",
+  //                       {{"0"}, {"1"}},
+  //                       {turing::Move::Right, turing::Move::Left});
+  // machine.addTransition("q1",
+  //                       {{"1"}, {"."}},
+  //                       "q1",
+  //                       {{"1"}, {"0"}},
+  //                       {turing::Move::Right, turing::Move::Stop});
+  // machine.addTransition("q1",
+  //                       {{"."}, {"0"}},
+  //                       "q2",
+  //                       {{"."}, {"."}},
+  //                       {turing::Move::Right, turing::Move::Stop});
 
   // tape.write({"a", "b"});
   //
@@ -33,7 +68,7 @@ int main() {
   //
   // tape.write({"a", "a"});
 
-  std::cout << machine << std::endl;
+  machine.run("00110");
 
   return 0;
 }

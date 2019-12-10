@@ -14,35 +14,35 @@ namespace turing {
 /*!
  *  Construct a new Transition object.
  */
-Transition::Transition(const Cell& input_symbols,
+Transition::Transition(const std::vector<Cell>& input_symbols,
                        State* next_state,
-                       const Cell& output_symbols,
-                       const Move& movement)
+                       const std::vector<Cell>& output_symbols,
+                       const std::vector<Move>& moves)
 
     : input_symbols_(input_symbols),
       next_state_(next_state),
       output_symbols_(output_symbols),
-      movement_(movement) {}
+      moves_(moves) {}
 
 /*!
  *  Symbol needed by the tape for the transition.
  */
-Cell Transition::inputSymbols() const {
+std::vector<Cell> Transition::inputSymbols() const {
   return input_symbols_;
 }
 
 /*!
  *  Symbols written to the stack when transitioning.
  */
-Cell Transition::outputSymbols() const {
+std::vector<Cell> Transition::outputSymbols() const {
   return output_symbols_;
 }
 
 /*!
  *  Movement done by the Tape upon transitioning.
  */
-Move Transition::movement() const {
-  return movement_;
+std::vector<Move> Transition::moves() const {
+  return moves_;
 }
 
 /*!
@@ -56,13 +56,25 @@ std::string Transition::nextStateName() const {
  *  Move to the next state and return it, modifying the tape and the stack on the
  *  process.
  */
-State* Transition::nextState(Tape& current_tape) const {
-  if (current_tape.peek() != input_symbols_) {
+State* Transition::nextState(std::vector<Tape>& tapes) const {
+  // Must have the same amout of symbols that tapes (To write on each one)
+  if (tapes.size() != input_symbols_.size()) {
     return nullptr;
   }
 
-  current_tape.write(output_symbols_);
-  current_tape.move(movement_);
+  // Check that all tapes point to the correct symbol
+  for (size_t i = 0; i < tapes.size(); ++i) {
+    // Input symbols must be the same
+    if (tapes[i].peek() != input_symbols_[i]) {
+      return nullptr;
+    }
+  }
+
+  // Write and move the tapes
+  for (size_t i = 0; i < tapes.size(); ++i) {
+    tapes[i].write(output_symbols_[i]);
+    tapes[i].move(moves_[i]);
+  }
 
   return next_state_;
 }
@@ -75,7 +87,7 @@ State* Transition::nextState(Tape& current_tape) const {
 bool Transition::operator==(const Transition& other) const {
   return input_symbols_ == other.input_symbols_ &&
          output_symbols_ == other.output_symbols_ &&
-         nextStateName() == other.nextStateName() && movement_ == other.movement_;
+         nextStateName() == other.nextStateName() && moves_ == other.moves_;
 }
 
 /*!
@@ -94,20 +106,31 @@ std::ostream& operator<<(std::ostream& os, const Transition& t) {
   // os << "(" << t.input_symbol_ << ", " << t.stack_symbol_ << ") => {"
   //    << t.next_state_->name() << ", " << t.new_stack_symbols_ << "}";
   //
-  os << "( ";
+  os << "(";
 
-  for (const auto& s : t.input_symbols_) {
-    os << s << ", ";
+  for (const auto& cell : t.input_symbols_) {
+    os << "[";
+    for (const auto& symbol : cell) {
+      os << symbol << ", ";
+    }
+    os << "\b\b], ";
   }
 
-  os << "\b\b ) => { " << t.nextStateName() << ", ";
+  os << "\b\b) => { " << t.nextStateName() << ", ";
 
-  for (const auto& s : t.output_symbols_) {
-    os << s << ", ";
+  for (const auto& cell : t.output_symbols_) {
+    os << "[";
+    for (const auto& symbol : cell) {
+      os << symbol << ", ";
+    }
+    os << "\b\b], ";
   }
 
-  // TODO: Change int to enum correct value
-  os << to_string(t.movement()) << " }";
+  for (const auto& mov : t.moves_) {
+    os << "[" << to_string(mov) << "], ";
+  }
+
+  os << "\b\b}";
 
   return os;
 }

@@ -34,16 +34,17 @@ public:
 
   // Transitions
   void addTransition(const std::string& start_state_name,
-                     const Cell& input_symbols,
+                     const std::vector<Cell>& input_symbols,
                      const std::string& end_state_name,
-                     const Cell& output_symbols,
-                     const Move& movement);
+                     const std::vector<Cell>& output_symbols,
+                     const std::vector<Move>& moves);
 
   // Turing Machine
   bool debugMode() const;
   void toggleDebugMode(bool toggle);
 
   bool run(const std::string& input_string);
+  bool run(State* current_state, std::vector<Tape>& tapes);
 
   friend std::ostream& operator<<(std::ostream& os, const Turing& turing);
 
