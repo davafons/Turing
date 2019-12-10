@@ -16,7 +16,7 @@ class Utils {
 public:
   static Symbol blank;
 
-  static std::vector<std::string> split(const std::string &str);
+  static std::vector<std::string> split(const std::string &str, char delimiter = '\n');
 
   static std::string &trim(std::string &str);
   static std::string &ltrim(std::string &str);

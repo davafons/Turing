@@ -40,16 +40,15 @@ Symbol Utils::blank = "b";
 /*!
  *  Split a string using whitespaces as delimiter.
  */
-std::vector<std::string> Utils::split(const std::string &str) {
+std::vector<std::string> Utils::split(const std::string &str, char delimiter) {
   std::vector<Symbol> result;
 
   std::stringstream symbols_stream(str);
 
   Symbol symbol;
-  while (symbols_stream >> symbol) {
+  while (std::getline(symbols_stream, symbol, delimiter)) {
     result.push_back(symbol);
   }
-
   return result;
 }
 

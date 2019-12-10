@@ -60,7 +60,7 @@ void Alphabet::reset() {
 /*!
  *  Check if the passed Symbol is in the alphabet.
  */
-bool Alphabet::contains(Symbol symbol) {
+bool Alphabet::contains(Symbol symbol) const {
   return alphabet_symbols_.count(symbol);
 }
 
@@ -90,7 +90,7 @@ void Alphabet::addSymbols(const std::vector<Symbol> &symbols) {
  *  Use the Alphabet to split the input symbol on a vector of individual
  * Symbols. Note: Unrecognized elements are skipped.
  */
-std::vector<Symbol> Alphabet::splitInSymbols(const std::string &symbols_str) {
+std::vector<Symbol> Alphabet::splitInSymbols(const std::string &symbols_str) const {
   std::vector<Symbol> matches;
 
   // Prints a warning message if a symbol was skipped due to not being on the

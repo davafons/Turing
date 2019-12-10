@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <sstream>
-#include <unordered_map>
+#include <map>
 
 #include "data/alphabet.hpp"
 #include "utils/utils.hpp"
@@ -11,12 +11,11 @@ namespace turing {
 
 class Tape {
 public:
-  explicit Tape(int rows = 1);
+  explicit Tape(const Alphabet &alphabet = Alphabet(), int num_tracks = 1);
 
-  Alphabet &alphabet();
   const Alphabet &alphabet() const;
 
-  int rows() const;
+  int numTracks() const;
 
   Cell peek() const;
   void write(Cell cell);
@@ -25,40 +24,20 @@ public:
 
   void reset();
 
-  void setInputString(const std::vector<Cell> &input);
+  void setInputString(const std::string &input_string);
+
+  friend std::ostream &operator<<(std::ostream &os, const Tape &tape);
+
+private:
+  Cell at(int idx) const;
 
 private:
   int tape_head_{0};
-  int rows_{0};
+  int num_tracks_{0};
 
-  std::unordered_map<int, Cell> data_;
+  std::map<int, Cell> data_;
 
-  Alphabet alphabet_;
+  const Alphabet &alphabet_;
 };
-
-// template <int nTracks>
-// void Tape<nTracks>::setInputString(const std::string &input_str) {
-//   reset();
-//
-//   std::stringstream line_stream(input_str);
-//   std::string line;
-//
-//   int row = 0;
-//   while (std::getline(line_stream, line) && row < nTracks) {
-//     std::vector<Symbol> symbols = alphabet_.splitInSymbols(line);
-//
-//     for (int col = 0; col < symbols.size(); ++col) {
-//       if (!mem_.count(col)) {
-//         Cell cell;
-//         cell.fill(alphabet_.blank());
-//         mem_[col] = cell;
-//       }
-//
-//       mem_[col][row] = symbols[col];
-//     }
-//
-//     ++row;
-//   }
-// }
 
 }  // namespace turing

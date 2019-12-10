@@ -1,34 +1,29 @@
 #include "tape.hpp"
 
+#include "utils/utils.hpp"
+
 namespace turing {
 
-Tape::Tape(int rows) : rows_(rows) {}
-
-Alphabet& Tape::alphabet() {
-  return alphabet_;
-}
+Tape::Tape(const Alphabet& alphabet, int num_tracks)
+    : num_tracks_(num_tracks), alphabet_(alphabet) {}
 
 const Alphabet& Tape::alphabet() const {
   return alphabet_;
 }
 
-int Tape::rows() const {
-  return rows_;
+int Tape::numTracks() const {
+  return num_tracks_;
 }
 
 Cell Tape::peek() const {
-  if (!data_.count(tape_head_)) {
-    return Cell(rows_, alphabet_.blank());
-  }
-
-  return data_.at(tape_head_);
+  return at(tape_head_);
 }
 
 void Tape::write(Cell cell) {
-  if (cell.size() != rows_) {
+  if (cell.size() != num_tracks_) {
     throw std::runtime_error("Trying to add a Cell of height " +
                              std::to_string(cell.size()) + " to a Tape of height " +
-                             std::to_string(rows_));
+                             std::to_string(num_tracks_));
   }
 
   for (const auto& s : cell) {
@@ -62,16 +57,56 @@ void Tape::reset() {
   data_.clear();
 }
 
-void Tape::setInputString(const std::vector<Cell>& input) {
-  reset();
+void Tape::setInputString(const std::string& input_string) {
+  std::vector<std::string> lines = Utils::split(input_string);
 
-  for (const auto& cell : input) {
-    write(cell);
-    ++tape_head_;
+  for (const auto& line : lines) {
+    int col = 0;
+
+    if (!data_.count(col)) {
+      data_[col] = Cell(num_tracks_, alphabet_.blank());
+    }
+
+    int track_num = 0;
+    for (const auto symbol : alphabet_.splitInSymbols(line)) {
+      data_[col][track_num] = symbol;
+
+      ++track_num;
+    }
+  }
+}
+
+Cell Tape::at(int idx) const {
+  if (!data_.count(idx)) {
+    return Cell(num_tracks_, alphabet_.blank());
   }
 
-  // Reset tape_head to initial position
-  tape_head_ = 0;
+  return data_.at(idx);
+}
+
+std::ostream& operator<<(std::ostream& os, const Tape& tape) {
+
+  int first_cell_idx = tape.data_.cbegin()->first;
+  int last_cell_idx = tape.data_.crbegin()->first;
+
+  // Write indices
+  os << "  ";
+  for (int i = first_cell_idx; i <= last_cell_idx; ++i) {
+    os << i << "   ";
+  }
+  os << "\n";
+
+  // Write tape tracks
+  for (int track = 0; track < tape.num_tracks_; ++track) {
+    os << "[ ";
+    for (int cell_idx = first_cell_idx; cell_idx <= last_cell_idx; ++cell_idx) {
+      os << tape.at(cell_idx)[track] << " | ";
+    }
+
+    os << "\b\b]\n";
+  }
+
+  return os;
 }
 
 }  // namespace turing
