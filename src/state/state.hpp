@@ -11,17 +11,17 @@ namespace turing {
 
 class State {
 public:
-  explicit State(const std::string& name);
+  explicit State(const std::string &name);
 
   std::string name() const;
 
   bool isFinal() const;
   void setFinal(bool f);
 
-  std::unordered_set<Transition>& transitions(const Cell& input_symbols);
-  void addTransition(const Transition& transition);
+  std::unordered_set<Transition> &transitions(const Cell &input_symbols);
+  void addTransition(const Transition &transition);
 
-  friend std::ostream& operator<<(std::ostream& os, const State& state);
+  friend std::ostream &operator<<(std::ostream &os, const State &state);
 
 private:
   const std::string name_;

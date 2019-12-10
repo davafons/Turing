@@ -4,11 +4,17 @@ namespace turing {
 
 Tape::Tape(int rows) : rows_(rows) {}
 
-Alphabet& Tape::alphabet() { return alphabet_; }
+Alphabet& Tape::alphabet() {
+  return alphabet_;
+}
 
-const Alphabet& Tape::alphabet() const { return alphabet_; }
+const Alphabet& Tape::alphabet() const {
+  return alphabet_;
+}
 
-int Tape::rows() const { return rows_; }
+int Tape::rows() const {
+  return rows_;
+}
 
 Cell Tape::peek() const {
   if (!data_.count(tape_head_)) {

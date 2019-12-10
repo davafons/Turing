@@ -24,22 +24,30 @@ namespace turing {
 /*!
  *  Check if the alphabet is empty.
  */
-bool Alphabet::empty() const noexcept { return alphabet_symbols_.empty(); }
+bool Alphabet::empty() const noexcept {
+  return alphabet_symbols_.empty();
+}
 
 /*!
  *  Return the size of the alphabet.
  */
-size_t Alphabet::size() const noexcept { return alphabet_symbols_.size(); }
+size_t Alphabet::size() const noexcept {
+  return alphabet_symbols_.size();
+}
 
 /*!
  *  Return the blank Symbol of the alphabet.
  */
-Symbol Alphabet::blank() const noexcept { return blank_; }
+Symbol Alphabet::blank() const noexcept {
+  return blank_;
+}
 
 /*!
  *  Set a new blank Symbol to the alphabet.
  */
-void Alphabet::setBlank(Symbol blank) { blank_ = blank; }
+void Alphabet::setBlank(Symbol blank) {
+  blank_ = blank;
+}
 
 /*!
  *  Remove all symbols from the alphabet.
@@ -52,7 +60,9 @@ void Alphabet::reset() {
 /*!
  *  Check if the passed Symbol is in the alphabet.
  */
-bool Alphabet::contains(Symbol symbol) { return alphabet_symbols_.count(symbol); }
+bool Alphabet::contains(Symbol symbol) {
+  return alphabet_symbols_.count(symbol);
+}
 
 /*!
  *  Add a new symbol to the Alphabet.
@@ -94,7 +104,8 @@ std::vector<Symbol> Alphabet::splitInSymbols(const std::string &symbols_str) {
 
   int current_pos = 0;
   for (auto it = std::sregex_iterator(symbols_str.begin(), symbols_str.end(), regex_);
-       it != std::sregex_iterator(); ++it) {
+       it != std::sregex_iterator();
+       ++it) {
     // Push the current match to the symbols vector
     matches.push_back(it->str());
 

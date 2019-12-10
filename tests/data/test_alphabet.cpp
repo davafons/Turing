@@ -10,7 +10,9 @@ protected:
   Alphabet alphabet_;
 };
 
-TEST_F(AlphabetTest, Empty) { ASSERT_FALSE(alphabet_.empty()); }
+TEST_F(AlphabetTest, Empty) {
+  ASSERT_FALSE(alphabet_.empty());
+}
 
 TEST_F(AlphabetTest, Reset) {
   alphabet_.reset();

@@ -14,8 +14,10 @@ namespace turing {
 /*!
  *  Construct a new Transition object.
  */
-Transition::Transition(const Cell& input_symbols, State* next_state,
-                       const Cell& output_symbols, const Move& movement)
+Transition::Transition(const Cell& input_symbols,
+                       State* next_state,
+                       const Cell& output_symbols,
+                       const Move& movement)
 
     : input_symbols_(input_symbols),
       next_state_(next_state),
@@ -25,17 +27,23 @@ Transition::Transition(const Cell& input_symbols, State* next_state,
 /*!
  *  Symbol needed by the tape for the transition.
  */
-Cell Transition::inputSymbols() const { return input_symbols_; }
+Cell Transition::inputSymbols() const {
+  return input_symbols_;
+}
 
 /*!
  *  Symbols written to the stack when transitioning.
  */
-Cell Transition::outputSymbols() const { return output_symbols_; }
+Cell Transition::outputSymbols() const {
+  return output_symbols_;
+}
 
 /*!
  *  Movement done by the Tape upon transitioning.
  */
-Move Transition::movement() const { return movement_; }
+Move Transition::movement() const {
+  return movement_;
+}
 
 /*!
  *  Name of the next state to transition.

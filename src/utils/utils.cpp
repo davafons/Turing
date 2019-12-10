@@ -56,7 +56,9 @@ std::vector<std::string> Utils::split(const std::string &str) {
 /*!
  *  Remove all whitespaces at the start and end of the string.
  */
-std::string &Utils::trim(std::string &str) { return ltrim(rtrim(str)); }
+std::string &Utils::trim(std::string &str) {
+  return ltrim(rtrim(str));
+}
 
 /*!
  *  Remove all whitespaces at the start of the string.

@@ -20,7 +20,9 @@ protected:
   State* s2_;
 };
 
-TEST_F(StateTest, Name) { ASSERT_EQ(s1_->name(), "s1"); }
+TEST_F(StateTest, Name) {
+  ASSERT_EQ(s1_->name(), "s1");
+}
 
 TEST_F(StateTest, EmptyNameInit) {
   ASSERT_THROW({ State s(""); }, std::runtime_error);

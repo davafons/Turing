@@ -25,7 +25,9 @@ TEST_F(SimpleTapeTest, AlphabetConstructor) {
   ASSERT_EQ(tape_.alphabet().size(), 2);
 }
 
-TEST_F(SimpleTapeTest, Peek) { ASSERT_EQ(tape_.peek(), "A"); }
+TEST_F(SimpleTapeTest, Peek) {
+  ASSERT_EQ(tape_.peek(), "A");
+}
 
 TEST_F(SimpleTapeTest, Move) {
   ASSERT_EQ(tape_.peek(), "A");
@@ -46,7 +48,9 @@ TEST_F(SimpleTapeTest, Move) {
   ASSERT_EQ(tape_.peek(), tape_.alphabet().blank());
 }
 
-TEST_F(SimpleTapeTest, Reset) { tape_.reset(); }
+TEST_F(SimpleTapeTest, Reset) {
+  tape_.reset();
+}
 
 TEST_F(SimpleTapeTest, SetInputString) {
   tape_.alphabet().reset();
