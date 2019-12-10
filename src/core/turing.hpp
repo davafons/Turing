@@ -33,7 +33,7 @@ public:
   void addStates(const std::vector<std::string>& names_str);
 
   // Transitions
-  void addTransition(const std::string& start_state_name,
+  void addTransition(const std::string& initial_state_name,
                      const std::vector<Cell>& input_symbols,
                      const std::string& end_state_name,
                      const std::vector<Cell>& output_symbols,
@@ -52,7 +52,7 @@ private:
   Alphabet input_alphabet_;
   Alphabet tape_alphabet_;
 
-  State* start_state_{nullptr};
+  State* initial_state_{nullptr};
 
   std::vector<Tape> tapes_;
   int tape_tracks_{1};

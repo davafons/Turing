@@ -53,14 +53,14 @@ bool Turing::hasState(const std::string& name) {
 }
 
 const State* Turing::startState() const {
-  return start_state_;
+  return initial_state_;
 }
 
 void Turing::setInitialState(const std::string& name) {
   if (name.empty()) {
-    start_state_ = nullptr;
+    initial_state_ = nullptr;
   } else {
-    start_state_ = state(name);
+    initial_state_ = state(name);
   }
 }
 
@@ -90,13 +90,13 @@ void Turing::addStates(const std::vector<std::string>& state_names) {
   }
 }
 
-void Turing::addTransition(const std::string& start_state_name,
+void Turing::addTransition(const std::string& initial_state_name,
                            const std::vector<Cell>& input_symbols,
                            const std::string& end_state_name,
                            const std::vector<Cell>& output_symbols,
                            const std::vector<Move>& moves) {
 
-  state(start_state_name)
+  state(initial_state_name)
       ->addTransition(
           Transition(input_symbols, state(end_state_name), output_symbols, moves));
 }
@@ -113,13 +113,49 @@ bool Turing::run(const std::string& input_string) {
   // Fill initial tape with input string
   tapes_[0].setInputString(input_string);
 
-  std::cout << *this << std::endl;
+  State* current_state = initial_state_;
 
-  return true;
+  return run(current_state, tapes_);
 }
 
 bool Turing::run(State* current_state, std::vector<Tape>& tapes) {
-  return true;
+  if (!current_state) {
+    return false;
+  }
+
+  if (current_state->isFinal()) {
+    return true;
+  }
+
+  std::vector<Cell> input_symbols;
+  for (const auto& tape : tapes) {
+    input_symbols.push_back(tape.peek());
+  }
+
+  std::cout << "> Input symbols: \n[";
+  for (const auto& cell : input_symbols) {
+    std::cout << "(";
+    for (const auto& symbol : cell) {
+      std::cout << symbol << ", ";
+    }
+    std::cout << "\b\b), ";
+  }
+  std::cout << "\b\b]" << std::endl;
+
+  for (const auto& transition : current_state->transitions(input_symbols)) {
+    std::cout << transition << std::endl;
+
+    std::vector<Tape> new_tapes(tapes);
+    State* new_state = transition.nextState(new_tapes);
+
+    bool result = run(new_state, new_tapes);
+
+    if (result) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 std::ostream& operator<<(std::ostream& os, const Turing& machine) {
@@ -137,7 +173,7 @@ std::ostream& operator<<(std::ostream& os, const Turing& machine) {
   os << "> Input alphabet: " << machine.inputAlphabet() << std::endl;
   os << "> Tape alphabet: " << machine.tapeAlphabet() << std::endl;
 
-  os << "> Initial state: " << machine.start_state_->name() << std::endl;
+  os << "> Initial state: " << machine.initial_state_->name() << std::endl;
 
   os << "> Tapes:\n";
 
