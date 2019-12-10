@@ -37,7 +37,7 @@ private:
   std::string blank_{"."};
 
   std::regex regex_;
-  std::unordered_set<Symbol> alphabet_symbols_;
+  std::unordered_set<Symbol> alphabet_symbols_{blank_};
 };
 
 }  // namespace turing

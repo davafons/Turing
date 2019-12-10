@@ -46,7 +46,21 @@ Symbol Alphabet::blank() const noexcept {
  *  Set a new blank Symbol to the alphabet.
  */
 void Alphabet::setBlank(Symbol blank) {
-  blank_ = blank;
+  if (blank == blank_) {
+    return;
+  }
+
+  if (alphabet_symbols_.count(blank)) {
+    std::cerr << "Can't set blank symbol to " << blank << ". Already in Alphabet."
+              << std::endl;
+  } else {
+    // Remove last blank symbol
+    alphabet_symbols_.erase(blank_);
+
+    // Set new one
+    blank_ = blank;
+    addSymbol(blank_);
+  }
 }
 
 /*!

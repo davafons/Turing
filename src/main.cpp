@@ -14,18 +14,20 @@ int main() {
 
   turing::Tape tape(alpha, 2);
 
-  tape.write({"a", "b"});
+  // tape.write({"a", "b"});
+  //
+  // tape.move(turing::Move::Right);
+  // tape.move(turing::Move::Right);
+  //
+  // tape.write({"b", "a"});
+  //
+  // tape.move(turing::Move::Right);
+  // tape.move(turing::Move::Right);
+  // tape.move(turing::Move::Right);
+  //
+  // tape.write({"a", "a"});
 
-  tape.move(turing::Move::Right);
-  tape.move(turing::Move::Right);
-
-  tape.write({"b", "a"});
-
-  tape.move(turing::Move::Right);
-  tape.move(turing::Move::Right);
-  tape.move(turing::Move::Right);
-
-  tape.write({"a", "a"});
+  tape.setInputString("ab.a\nb.aa");
 
   std::cout << tape << std::endl;
 

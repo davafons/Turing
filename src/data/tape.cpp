@@ -58,21 +58,22 @@ void Tape::reset() {
 }
 
 void Tape::setInputString(const std::string& input_string) {
-  std::vector<std::string> lines = Utils::split(input_string);
+  std::vector<std::string> lines = Utils::split(input_string, '\n');
 
+  int track_num = 0;
   for (const auto& line : lines) {
-    int col = 0;
-
-    if (!data_.count(col)) {
-      data_[col] = Cell(num_tracks_, alphabet_.blank());
-    }
-
-    int track_num = 0;
+    int cell_idx = 0;
     for (const auto symbol : alphabet_.splitInSymbols(line)) {
-      data_[col][track_num] = symbol;
+      if (!data_.count(cell_idx)) {
+        data_[cell_idx] = Cell(num_tracks_, alphabet_.blank());
+      }
 
-      ++track_num;
+      data_[cell_idx][track_num] = symbol;
+
+      ++cell_idx;
     }
+
+    ++track_num;
   }
 }
 
