@@ -2,16 +2,7 @@
 
 namespace turing {
 
-Tape::Tape(int rows, const std::string& input_str, const std::string& alphabet_str)
-    : rows_(rows) {
-  if (alphabet_str.empty()) {
-    alphabet_.addSymbols(input_str);
-  } else {
-    alphabet_.addSymbols(alphabet_str);
-  }
-
-  // setInputString(input_str); // TODO: Implementar
-}
+Tape::Tape(int rows) : rows_(rows) {}
 
 Alphabet& Tape::alphabet() { return alphabet_; }
 
@@ -63,6 +54,18 @@ void Tape::move(Move dir) {
 void Tape::reset() {
   tape_head_ = 0;
   data_.clear();
+}
+
+void Tape::setInputString(const std::vector<Cell>& input) {
+  reset();
+
+  for (const auto& cell : input) {
+    write(cell);
+    ++tape_head_;
+  }
+
+  // Reset tape_head to initial position
+  tape_head_ = 0;
 }
 
 }  // namespace turing

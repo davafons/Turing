@@ -16,5 +16,35 @@ int main() {
   std::cout << *q1 << std::endl;
   std::cout << *q2 << std::endl;
 
+  auto print = [](const auto &col) {
+    std::cout << "Col: [";
+    for (const auto &value : col) {
+      std::cout << value << ", ";
+    }
+    std::cout << "\b\b]\n";
+  };
+
+  turing::Tape tape(3);
+  tape.alphabet().addSymbols("a d c");
+
+  print(tape.peek());
+  tape.write({"a", "d", "b"});
+
+  print(tape.peek());
+
+  std::vector<turing::Cell> input_string = {
+      {"a", "b", "c"}, {"a", "a", "a"}, {"d", "b", "b"}};
+
+  tape.setInputString(input_string);
+
+  std::cout << "----" << std::endl;
+  print(tape.peek());
+  tape.move(turing::Move::Right);
+  print(tape.peek());
+  tape.move(turing::Move::Right);
+  print(tape.peek());
+  tape.move(turing::Move::Right);
+  print(tape.peek());
+
   return 0;
 }

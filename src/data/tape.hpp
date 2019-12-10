@@ -11,8 +11,7 @@ namespace turing {
 
 class Tape {
 public:
-  explicit Tape(int rows = 1, const std::string &input_str = "",
-                const std::string &alphabet_str = "");
+  explicit Tape(int rows = 1);
 
   Alphabet &alphabet();
   const Alphabet &alphabet() const;
@@ -26,7 +25,7 @@ public:
 
   void reset();
 
-  // void setInputString(const std::string &input_str);
+  void setInputString(const std::vector<Cell> &input);
 
 private:
   int tape_head_{0};
