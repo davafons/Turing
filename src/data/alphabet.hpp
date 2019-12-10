@@ -24,7 +24,7 @@ public:
   bool contains(Symbol symbol);
 
   void addSymbol(Symbol symbol);
-  void addSymbols(const std::string &symbols_str);
+  void addSymbols(const std::vector<Symbol> &symbols);
 
   std::vector<Symbol> splitInSymbols(const std::string &symbols_str);
 
@@ -40,4 +40,4 @@ private:
   std::unordered_set<Symbol> alphabet_symbols_;
 };
 
-} // namespace turing
+}  // namespace turing

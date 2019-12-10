@@ -49,7 +49,13 @@ std::string Transition::nextStateName() const {
  *  process.
  */
 State* Transition::nextState(Tape& current_tape) const {
-  // TODO: Implement
+  if (current_tape.peek() != input_symbols_) {
+    return nullptr;
+  }
+
+  current_tape.write(output_symbols_);
+  current_tape.move(movement_);
+
   return next_state_;
 }
 

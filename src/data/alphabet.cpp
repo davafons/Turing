@@ -67,10 +67,9 @@ void Alphabet::addSymbol(Symbol symbol) {
 
 /*!
  *  Add a new set of symbols to the Alphabet.
- *  Note: The new symbols must be separated by a whitespace.
  */
-void Alphabet::addSymbols(const std::string &symbols_str) {
-  for (const auto &symbol : Utils::split(symbols_str)) {
+void Alphabet::addSymbols(const std::vector<Symbol> &symbols) {
+  for (const auto &symbol : symbols) {
     alphabet_symbols_.insert(symbol);
   }
 
