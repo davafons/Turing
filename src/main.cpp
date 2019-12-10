@@ -5,14 +5,11 @@
 int main() {
   turing::Turing machine;
 
-  machine.addState("q1");
-  machine.addState("q2");
-  machine.addState("q3");
+  machine.addStates({"q0", "q1", "q2"});
+  machine.inputAlphabet().addSymbols({"0", "1"});
+  machine.tapeAlphabet().addSymbols({"0", "1", "."});
 
-  turing::Alphabet alpha;
-  alpha.addSymbols({"a", "b"});
-
-  turing::Tape tape(alpha, 2);
+  machine.set
 
   // tape.write({"a", "b"});
   //

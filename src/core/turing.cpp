@@ -48,7 +48,7 @@ const State* Turing::startState() const {
   return start_state_;
 }
 
-void Turing::setStartState(const std::string& name) {
+void Turing::setInitialState(const std::string& name) {
   if (name.empty()) {
     start_state_ = nullptr;
   } else {

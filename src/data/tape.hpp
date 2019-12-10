@@ -1,8 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include <sstream>
 #include <map>
+#include <sstream>
 
 #include "data/alphabet.hpp"
 #include "utils/utils.hpp"
