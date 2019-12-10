@@ -14,11 +14,6 @@ namespace turing {
  */
 
 /*!
- *  Symbol used to represent "lambda".
- */
-Symbol Utils::lambda = ".";
-
-/*!
  *  Symbol used to represent "blank".
  */
 Symbol Utils::blank = "b";
@@ -74,4 +69,4 @@ std::string Utils::nextLine(std::ifstream &file_stream) {
   return line;
 }
 
-} // namespace turing
+}  // namespace turing

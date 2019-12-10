@@ -9,7 +9,7 @@
 
 namespace turing {
 
-enum class Direction { Left, Right, Stop };
+enum class Move { Left, Right, Stop };
 
 template <int nTracks>
 class Tape {
@@ -36,7 +36,7 @@ public:
 
   void write(Cell cell);
 
-  void move(Direction dir);
+  void move(Move dir);
   void moveLeft();
   void moveRight();
 
@@ -124,17 +124,17 @@ void Tape<nTracks>::write(Cell cell) {
 }
 
 template <int nTracks>
-void Tape<nTracks>::move(Direction dir) {
+void Tape<nTracks>::move(Move dir) {
   switch (dir) {
-    case Direction::Left:
+    case Move::Left:
       --tape_head_;
       break;
 
-    case Direction::Right:
+    case Move::Right:
       ++tape_head_;
       break;
 
-    case Direction::Stop:
+    case Move::Stop:
     default:
       break;
   }

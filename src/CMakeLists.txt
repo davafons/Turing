@@ -2,6 +2,7 @@
 add_library(turinglib)
 
 add_subdirectory(data)
+add_subdirectory(state)
 add_subdirectory(utils)
 
 target_include_directories(
