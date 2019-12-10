@@ -1,5 +1,7 @@
 #include "tape.hpp"
 
+#include <iomanip>
+
 #include "utils/utils.hpp"
 
 namespace turing {
@@ -95,11 +97,11 @@ std::ostream& operator<<(std::ostream& os, const Tape& tape) {
     return os;
   }
 
-  int first_cell_idx = tape.data_.cbegin()->first;
-  int last_cell_idx = tape.data_.crbegin()->first;
+  int first_cell_idx = tape.data_.cbegin()->first - 1;
+  int last_cell_idx = tape.data_.crbegin()->first + 1;
 
   // Write indices
-  os << "  ";
+  os << " ";
   for (int i = first_cell_idx; i <= last_cell_idx; ++i) {
     os << i << "   ";
   }
@@ -114,6 +116,8 @@ std::ostream& operator<<(std::ostream& os, const Tape& tape) {
 
     os << "\b\b]\n";
   }
+
+  os << std::setw(3 + (tape.tape_head_ - first_cell_idx) * 4) << "^";
 
   return os;
 }

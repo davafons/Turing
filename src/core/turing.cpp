@@ -115,18 +115,33 @@ bool Turing::run(const std::string& input_string) {
 
   State* current_state = initial_state_;
 
-  std::cout << *this << std::endl;
-
   return run(current_state, tapes_);
 }
 
 bool Turing::run(State* current_state, std::vector<Tape>& tapes) {
+  // Helper function to print the state of the Turing machine
+  auto print_turing = [&current_state, &tapes] {
+    std::cout << "---------------------------" << std::endl;
+    std::cout << "Current state: " << current_state->name() << std::endl;
+    std::cout << tapes << std::endl;
+    std::cout << "---------------------------" << std::endl;
+  };
+
   if (!current_state) {
     return false;
   }
 
   if (current_state->isFinal()) {
+    if (debugMode()) {
+      std::cout << "---------------------------" << std::endl;
+      std::cout << current_state->name() << " is a Final state." << std::endl;
+      std::cout << "---------------------------" << std::endl;
+    }
     return true;
+  }
+
+  if (debugMode()) {
+    print_turing();
   }
 
   std::vector<Cell> input_symbols;
@@ -134,21 +149,31 @@ bool Turing::run(State* current_state, std::vector<Tape>& tapes) {
     input_symbols.push_back(tape.peek());
   }
 
-  std::cout << "\n> Input symbols: " << input_symbols << std::endl;
-
   for (const auto& transition : current_state->transitions(input_symbols)) {
-    std::cout << transition << std::endl;
+    if (debugMode()) {
+      std::cout << "> Transition: " << transition << std::endl;
+    }
 
+    // For each transition, clone the tapes and call this method recursively.
     std::vector<Tape> new_tapes(tapes);
     State* new_state = transition.nextState(new_tapes);
 
+    // Check if exploring this transition the Turing machine recognizes the string.
     bool result = run(new_state, new_tapes);
 
+    // If the string is recognized, return true to stop execution.
     if (result) {
       return true;
     }
+
+    if (debugMode()) {
+      std::cout << ">> Can't continue. Going back to previous state." << std::endl;
+      print_turing();
+    }
   }
 
+  // If all the transitions have been exhausted, and we're not on a final state, just
+  // reutn false
   return false;
 }
 
@@ -169,14 +194,7 @@ std::ostream& operator<<(std::ostream& os, const Turing& machine) {
 
   os << "> Initial state: " << machine.initial_state_->name() << std::endl;
 
-  os << "> Tapes:\n";
-
-  for (int i = 0; i < machine.tapes_.size(); ++i) {
-    os << "Tape " << i << std::endl;
-    os << machine.tapes_[i] << std::endl;
-  }
-
-  os << std::endl;
+  os << "> Tapes:\n" << machine.tapes_;
 
   os << "> Transitions: " << std::endl;
   for (const auto& s_pair : machine.states_) {

@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+#include "data/tape.hpp"
+
 namespace turing {
 
 /*!
@@ -56,6 +58,15 @@ std::ostream &operator<<(std::ostream &os, const std::vector<Cell> &cells) {
   for (const auto &cell : cells) {
     os << cell;
   }
+  return os;
+}
+
+std::ostream &operator<<(std::ostream &os, const std::vector<Tape> &tapes) {
+  for (int i = 0; i < tapes.size(); ++i) {
+    os << "Tape " << i << std::endl;
+    os << tapes[i];
+  }
+
   return os;
 }
 

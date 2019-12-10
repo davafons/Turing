@@ -59,7 +59,7 @@ private:
 
   std::map<std::string, State*> states_;
 
-  bool debug_mode_{false};
+  bool debug_mode_{true};
 };
 
 }  // namespace turing
