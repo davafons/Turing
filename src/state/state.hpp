@@ -18,7 +18,7 @@ public:
   bool isFinal() const;
   void setFinal(bool f);
 
-  std::unordered_set<Transition> &transitions(const std::vector<Cell> &input_symbols);
+  std::unordered_set<Transition> &transitions(const std::vector<Symbol> &input_symbols);
   void addTransition(const Transition &transition);
 
   friend std::ostream &operator<<(std::ostream &os, const State &state);
@@ -27,7 +27,7 @@ private:
   const std::string name_;
   bool final_{false};
 
-  std::map<std::vector<Cell>, std::unordered_set<Transition>> transitions_;
+  std::map<std::vector<Symbol>, std::unordered_set<Transition>> transitions_;
 };
 
 }  // namespace turing

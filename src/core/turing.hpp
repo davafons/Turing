@@ -8,11 +8,10 @@ namespace turing {
 
 class Turing {
 public:
-  Turing(int num_tapes = 1, int num_tracks = 1);
+  Turing(int num_tapes = 1);
   ~Turing();
 
   int numTapes() const;
-  int numTracks() const;
 
   Alphabet& tapeAlphabet();
   const Alphabet& tapeAlphabet() const;
@@ -34,9 +33,9 @@ public:
 
   // Transitions
   void addTransition(const std::string& initial_state_name,
-                     const std::vector<Cell>& input_symbols,
+                     const std::vector<Symbol>& input_symbols,
                      const std::string& end_state_name,
-                     const std::vector<Cell>& output_symbols,
+                     const std::vector<Symbol>& output_symbols,
                      const std::vector<Move>& moves);
 
   // Turing Machine
@@ -52,11 +51,9 @@ private:
   Alphabet input_alphabet_;
   Alphabet tape_alphabet_;
 
-  State* initial_state_{nullptr};
-
   std::vector<Tape> tapes_;
-  int tape_tracks_{1};
 
+  State* initial_state_{nullptr};
   std::map<std::string, State*> states_;
 
   bool debug_mode_{true};

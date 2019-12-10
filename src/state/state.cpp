@@ -44,7 +44,7 @@ void State::setFinal(bool f) {
  *  If there aren't any transitions for the symbols, return an empty set.
  */
 std::unordered_set<Transition> &State::transitions(
-    const std::vector<Cell> &input_symbols) {
+    const std::vector<Symbol> &input_symbols) {
   return transitions_[input_symbols];
 }
 

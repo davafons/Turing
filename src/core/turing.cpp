@@ -6,8 +6,8 @@
 
 namespace turing {
 
-Turing::Turing(int num_tapes, int num_tracks) {
-  tapes_ = std::vector<Tape>(num_tapes, Tape(tape_alphabet_, num_tracks));
+Turing::Turing(int num_tapes) {
+  tapes_ = std::vector<Tape>(num_tapes, Tape(tape_alphabet_));
 }
 
 Turing::~Turing() {
@@ -18,10 +18,6 @@ Turing::~Turing() {
 
 int Turing::numTapes() const {
   return tapes_.size();
-}
-
-int Turing::numTracks() const {
-  return tape_tracks_;
 }
 
 Alphabet& Turing::tapeAlphabet() {
@@ -91,9 +87,9 @@ void Turing::addStates(const std::vector<std::string>& state_names) {
 }
 
 void Turing::addTransition(const std::string& initial_state_name,
-                           const std::vector<Cell>& input_symbols,
+                           const std::vector<Symbol>& input_symbols,
                            const std::string& end_state_name,
-                           const std::vector<Cell>& output_symbols,
+                           const std::vector<Symbol>& output_symbols,
                            const std::vector<Move>& moves) {
 
   state(initial_state_name)
@@ -148,7 +144,7 @@ bool Turing::run(State* current_state, std::vector<Tape>& tapes) {
   }
 
   // Collect all symbols from all tapes for each current head
-  std::vector<Cell> input_symbols;
+  std::vector<Symbol> input_symbols;
   for (const auto& tape : tapes) {
     input_symbols.push_back(tape.peek());
   }
@@ -184,8 +180,7 @@ bool Turing::run(State* current_state, std::vector<Tape>& tapes) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Turing& machine) {
-  os << "> Turing machine: " << machine.numTapes() << " tapes / " << machine.numTracks()
-     << " tracks." << std::endl;
+  os << "> Turing machine with: " << machine.numTapes() << " tapes." << std::endl;
 
   os << "> States: ";
 

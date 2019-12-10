@@ -34,30 +34,19 @@ std::string to_string(const Move &move) {
   }
 }
 
-std::ostream &operator<<(std::ostream &os, const Cell &cell) {
-  if (cell.empty()) {
+std::ostream &operator<<(std::ostream &os, const std::vector<Symbol> &symbols) {
+  if (symbols.empty()) {
     os << "[ (empty) ]";
     return os;
   }
 
   os << "[";
-  for (const auto &symbol : cell) {
-    os << symbol << "|";
-  }
-  os << "\b]";
-
-  return os;
-}
-
-std::ostream &operator<<(std::ostream &os, const std::vector<Cell> &cells) {
-  if (cells.empty()) {
-    os << "[ (empty) ]";
-    return os;
+  for (const auto &symbol : symbols) {
+    os << symbol << ", ";
   }
 
-  for (const auto &cell : cells) {
-    os << cell;
-  }
+  os << "\b\b]";
+
   return os;
 }
 

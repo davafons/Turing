@@ -14,9 +14,9 @@ namespace turing {
 /*!
  *  Construct a new Transition object.
  */
-Transition::Transition(const std::vector<Cell>& input_symbols,
+Transition::Transition(const std::vector<Symbol>& input_symbols,
                        State* next_state,
-                       const std::vector<Cell>& output_symbols,
+                       const std::vector<Symbol>& output_symbols,
                        const std::vector<Move>& moves)
 
     : input_symbols_(input_symbols),
@@ -27,14 +27,14 @@ Transition::Transition(const std::vector<Cell>& input_symbols,
 /*!
  *  Symbol needed by the tape for the transition.
  */
-std::vector<Cell> Transition::inputSymbols() const {
+std::vector<Symbol> Transition::inputSymbols() const {
   return input_symbols_;
 }
 
 /*!
  *  Symbols written to the stack when transitioning.
  */
-std::vector<Cell> Transition::outputSymbols() const {
+std::vector<Symbol> Transition::outputSymbols() const {
   return output_symbols_;
 }
 
@@ -70,10 +70,10 @@ State* Transition::nextState(std::vector<Tape>& tapes) const {
     }
   }
 
-  // Write and move the tapes
+  // Write on tapes
   for (size_t i = 0; i < tapes.size(); ++i) {
     tapes[i].write(output_symbols_[i]);
-    tapes[i].move(moves_[i]);
+    tapes[i].move((moves_.size() == 1) ? moves_[0] : moves_[i]);
   }
 
   return next_state_;

@@ -6,8 +6,7 @@
 
 namespace turing {
 
-Tape::Tape(const Alphabet& alphabet, int num_tracks)
-    : num_tracks_(num_tracks), alphabet_(alphabet) {}
+Tape::Tape(const Alphabet& alphabet) : alphabet_(alphabet) {}
 
 const Alphabet& Tape::alphabet() const {
   return alphabet_;
@@ -17,29 +16,17 @@ bool Tape::empty() const {
   return data_.empty();
 }
 
-int Tape::numTracks() const {
-  return num_tracks_;
-}
-
-Cell Tape::peek() const {
+Symbol Tape::peek() const {
   return at(tape_head_);
 }
 
-void Tape::write(Cell cell) {
-  if (cell.size() != num_tracks_) {
-    throw std::runtime_error("Trying to add a Cell of height " +
-                             std::to_string(cell.size()) + " to a Tape of height " +
-                             std::to_string(num_tracks_));
+void Tape::write(Symbol symbol) {
+  if (!alphabet_.contains(symbol) && symbol != alphabet_.blank()) {
+    throw std::runtime_error("Can't write Symbol " + symbol +
+                             ". Not in Alphabet.");  // TODO: Print alphabet
   }
 
-  for (const auto& s : cell) {
-    if (!alphabet_.contains(s) && s != alphabet_.blank()) {
-      throw std::runtime_error("Can't write Symbol " + s +
-                               ". Not in Alphabet.");  // TODO: Print alphabet
-    }
-  }
-
-  data_[tape_head_] = cell;
+  data_[tape_head_] = symbol;
 }
 
 void Tape::move(Move dir) {
@@ -63,29 +50,17 @@ void Tape::reset() {
   data_.clear();
 }
 
-void Tape::setInputString(const std::string& input_string) {
-  std::vector<std::string> lines = Utils::split(input_string, '\n');
+void Tape::setInputString(const std::string& input_line) {
+  auto symbols = alphabet_.splitInSymbols(input_line);
 
-  int track_num = 0;
-  for (const auto& line : lines) {
-    int cell_idx = 0;
-    for (const auto symbol : alphabet_.splitInSymbols(line)) {
-      if (!data_.count(cell_idx)) {
-        data_[cell_idx] = Cell(num_tracks_, alphabet_.blank());
-      }
-
-      data_[cell_idx][track_num] = symbol;
-
-      ++cell_idx;
-    }
-
-    ++track_num;
+  for (int i = 0; i < symbols.size(); ++i) {
+    data_[i] = symbols[i];
   }
 }
 
-Cell Tape::at(int idx) const {
+Symbol Tape::at(int idx) const {
   if (!data_.count(idx)) {
-    return Cell(num_tracks_, alphabet_.blank());
+    return alphabet_.blank();
   }
 
   return data_.at(idx);
@@ -108,14 +83,12 @@ std::ostream& operator<<(std::ostream& os, const Tape& tape) {
   os << "\n";
 
   // Write tape tracks
-  for (int track = 0; track < tape.num_tracks_; ++track) {
-    os << "[ ";
-    for (int cell_idx = first_cell_idx; cell_idx <= last_cell_idx; ++cell_idx) {
-      os << tape.at(cell_idx)[track] << " | ";
-    }
-
-    os << "\b\b]\n";
+  os << "[ ";
+  for (int i = first_cell_idx; i <= last_cell_idx; ++i) {
+    os << tape.at(i) << " | ";
   }
+
+  os << "\b\b]\n";
 
   os << std::setw(3 + (tape.tape_head_ - first_cell_idx) * 4) << "^";
 

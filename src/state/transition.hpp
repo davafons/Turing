@@ -14,13 +14,13 @@ class State;
 class Transition {
 public:
   Transition() = default;
-  Transition(const std::vector<Cell>& input_symbols,
+  Transition(const std::vector<Symbol>& input_symbols,
              State* next_state,
-             const std::vector<Cell>& output_symbols,
+             const std::vector<Symbol>& output_symbols,
              const std::vector<Move>& moves);
 
-  std::vector<Cell> inputSymbols() const;
-  std::vector<Cell> outputSymbols() const;
+  std::vector<Symbol> inputSymbols() const;
+  std::vector<Symbol> outputSymbols() const;
 
   std::vector<Move> moves() const;
 
@@ -35,9 +35,9 @@ public:
   friend std::ostream& operator<<(std::ostream& os, const Transition& t);
 
 private:
-  std::vector<Cell> input_symbols_{};
+  std::vector<Symbol> input_symbols_{};
   State* next_state_{nullptr};
-  std::vector<Cell> output_symbols_{};
+  std::vector<Symbol> output_symbols_{};
   std::vector<Move> moves_{Move::Stop};
 };
 

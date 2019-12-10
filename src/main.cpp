@@ -15,13 +15,13 @@ int main() {
 
   machine.setFinalStates({"q2"});
   // Simple example
-  machine.addTransition("q0", {{"0"}}, "q1", {{"0"}}, {turing::Move::Right});
-  machine.addTransition("q0", {{"0"}}, "q1", {{"0"}}, {turing::Move::Right});
-  machine.addTransition("q0", {{"0"}}, "q1", {{"0"}}, {turing::Move::Right});
-  machine.addTransition("q0", {{"1"}}, "q0", {{"1"}}, {turing::Move::Right});
-  machine.addTransition("q1", {{"0"}}, "q0", {{"0"}}, {turing::Move::Right});
-  machine.addTransition("q1", {{"1"}}, "q1", {{"1"}}, {turing::Move::Right});
-  machine.addTransition("q1", {{"."}}, "q2", {{"."}}, {turing::Move::Right});
+  machine.addTransition("q0", {"0"}, "q1", {"0"}, {turing::Move::Right});
+  machine.addTransition("q0", {"0"}, "q1", {"0"}, {turing::Move::Right});
+  machine.addTransition("q0", {"0"}, "q1", {"0"}, {turing::Move::Right});
+  machine.addTransition("q0", {"1"}, "q0", {"1"}, {turing::Move::Right});
+  machine.addTransition("q1", {"0"}, "q0", {"0"}, {turing::Move::Right});
+  machine.addTransition("q1", {"1"}, "q1", {"1"}, {turing::Move::Right});
+  machine.addTransition("q1", {"."}, "q2", {"."}, {turing::Move::Right});
 
   // Multi track example
   // machine.addTransition("q0", {{"0", "0"}}, "q1", {{"0", "1"}},
