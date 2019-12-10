@@ -9,8 +9,6 @@
 
 namespace turing {
 
-enum class Move { Left, Right, Stop };
-
 class Tape {
 public:
   explicit Tape(int rows = 1, const std::string &input_str = "",

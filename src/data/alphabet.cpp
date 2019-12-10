@@ -71,8 +71,10 @@ void Alphabet::addSymbol(Symbol symbol) {
  */
 void Alphabet::addSymbols(const std::string &symbols_str) {
   for (const auto &symbol : Utils::split(symbols_str)) {
-    addSymbol(symbol);
+    alphabet_symbols_.insert(symbol);
   }
+
+  regex_ = std::regex(regexStr());
 }
 
 /*!

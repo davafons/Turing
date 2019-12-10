@@ -14,8 +14,8 @@ class State;
 class Transition {
 public:
   Transition() = default;
-  Transition(const Cell& input_symbols, const Cell& output_symbols, State* next_state,
-             const Move& dir);
+  Transition(const Cell& input_symbols, State* next_state, const Cell& output_symbols,
+             const Move& movement);
 
   Cell inputSymbols() const;
   Cell outputSymbols() const;

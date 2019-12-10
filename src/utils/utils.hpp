@@ -9,6 +9,9 @@ namespace turing {
 using Symbol = std::string;
 using Cell = std::vector<Symbol>;
 
+enum class Move { Left, Right, Stop };
+std::string to_string(const Move &move);
+
 class Utils {
 public:
   static Symbol blank;

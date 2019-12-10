@@ -13,6 +13,25 @@ namespace turing {
  *  \brief Utility methods and objects.
  */
 
+std::string to_string(const Move &move) {
+  switch (move) {
+    case Move::Left:
+      return "Left";
+      break;
+
+    case Move::Right:
+      return "Right";
+      break;
+
+    case Move::Stop:
+      return "Stop";
+      break;
+
+    default:
+      return std::to_string(int(move));
+  }
+}
+
 /*!
  *  Symbol used to represent "blank".
  */

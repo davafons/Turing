@@ -14,12 +14,12 @@ namespace turing {
 /*!
  *  Construct a new Transition object.
  */
-Transition::Transition(const Cell& input_symbols, const Cell& output_symbols,
-                       State* next_state, const Move& movement)
+Transition::Transition(const Cell& input_symbols, State* next_state,
+                       const Cell& output_symbols, const Move& movement)
 
     : input_symbols_(input_symbols),
-      output_symbols_(output_symbols),
       next_state_(next_state),
+      output_symbols_(output_symbols),
       movement_(movement) {}
 
 /*!
@@ -93,7 +93,7 @@ std::ostream& operator<<(std::ostream& os, const Transition& t) {
   }
 
   // TODO: Change int to enum correct value
-  os << int(t.movement()) << " }";
+  os << to_string(t.movement()) << " }";
 
   return os;
 }
