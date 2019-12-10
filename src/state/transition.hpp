@@ -24,8 +24,7 @@ public:
 
   std::string nextStateName() const;
 
-  template <int Dim>
-  State* nextState(Tape<Dim>& current_tape) const;
+  State* nextState(Tape& current_tape) const;
 
   std::string str() const;
 

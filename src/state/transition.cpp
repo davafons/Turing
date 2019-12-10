@@ -48,8 +48,7 @@ std::string Transition::nextStateName() const {
  *  Move to the next state and return it, modifying the tape and the stack on the
  *  process.
  */
-template <int Dim>
-State* Transition::nextState(Tape<Dim>& current_tape) const {
+State* Transition::nextState(Tape& current_tape) const {
   // TODO: Implement
   return next_state_;
 }
