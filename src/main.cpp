@@ -9,7 +9,16 @@ int main() {
   machine.inputAlphabet().addSymbols({"0", "1"});
   machine.tapeAlphabet().addSymbols({"0", "1", "."});
 
-  machine.set
+  machine.setInitialState("q0");
+  machine.tapeAlphabet().setBlank(".");
+
+  machine.setFinalStates({"q2"});
+
+  machine.addTransition("q0", {"0"}, "q1", {"0"}, turing::Move::Right);
+  machine.addTransition("q0", {"1"}, "q0", {"1"}, turing::Move::Right);
+  machine.addTransition("q1", {"0"}, "q0", {"0"}, turing::Move::Right);
+  machine.addTransition("q1", {"1"}, "q1", {"1"}, turing::Move::Right);
+  machine.addTransition("q1", {"."}, "q2", {"."}, turing::Move::Right);
 
   // tape.write({"a", "b"});
   //
@@ -24,9 +33,7 @@ int main() {
   //
   // tape.write({"a", "a"});
 
-  tape.setInputString("ab.a\nb.aa");
-
-  std::cout << tape << std::endl;
+  std::cout << machine << std::endl;
 
   return 0;
 }

@@ -11,6 +11,9 @@ public:
   Turing(int num_tapes = 1, int num_tracks = 1);
   ~Turing();
 
+  int numTapes() const;
+  int numTracks() const;
+
   Alphabet& tapeAlphabet();
   const Alphabet& tapeAlphabet() const;
 
@@ -41,6 +44,8 @@ public:
   void toggleDebugMode(bool toggle);
 
   bool run(const std::string& input_string);
+
+  friend std::ostream& operator<<(std::ostream& os, const Turing& turing);
 
 private:
   Alphabet input_alphabet_;

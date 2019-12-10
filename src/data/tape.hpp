@@ -15,6 +15,8 @@ public:
 
   const Alphabet &alphabet() const;
 
+  bool empty() const;
+
   int numTracks() const;
 
   Cell peek() const;

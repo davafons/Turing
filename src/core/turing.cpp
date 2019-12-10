@@ -16,6 +16,14 @@ Turing::~Turing() {
   }
 }
 
+int Turing::numTapes() const {
+  return tapes_.size();
+}
+
+int Turing::numTracks() const {
+  return tape_tracks_;
+}
+
 Alphabet& Turing::tapeAlphabet() {
   return tape_alphabet_;
 }
@@ -107,6 +115,40 @@ bool Turing::run(const std::string& input_string) {
   tapes_[0].setInputString(input_string);
 
   return true;
+}
+
+std::ostream& operator<<(std::ostream& os, const Turing& machine) {
+  os << "> Turing machine: " << machine.numTapes() << " tapes / " << machine.numTracks()
+     << " tracks." << std::endl;
+
+  os << "> States: ";
+
+  for (const auto& s : machine.states_) {
+    os << s.second->name() << ((s.second->isFinal()) ? "*" : "") << " ";
+  }
+
+  os << std::endl;
+
+  os << "> Input alphabet: " << machine.inputAlphabet() << std::endl;
+  os << "> Tape alphabet: " << machine.tapeAlphabet() << std::endl;
+
+  os << "> Initial state: " << machine.start_state_->name() << std::endl;
+
+  os << "> Tapes:\n";
+
+  for (int i = 0; i < machine.tapes_.size(); ++i) {
+    os << "Tape " << i << std::endl;
+    os << machine.tapes_[i] << std::endl;
+  }
+
+  os << std::endl;
+
+  os << "> Transitions: " << std::endl;
+  for (const auto& s_pair : machine.states_) {
+    std::cout << *s_pair.second << std::endl;
+  }
+
+  return os;
 }
 
 }  // namespace turing

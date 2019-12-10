@@ -11,6 +11,10 @@ const Alphabet& Tape::alphabet() const {
   return alphabet_;
 }
 
+bool Tape::empty() const {
+  return data_.empty();
+}
+
 int Tape::numTracks() const {
   return num_tracks_;
 }
@@ -86,6 +90,10 @@ Cell Tape::at(int idx) const {
 }
 
 std::ostream& operator<<(std::ostream& os, const Tape& tape) {
+  if (tape.empty()) {
+    os << "[ (empty) ]";
+    return os;
+  }
 
   int first_cell_idx = tape.data_.cbegin()->first;
   int last_cell_idx = tape.data_.crbegin()->first;
