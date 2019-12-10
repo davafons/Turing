@@ -14,7 +14,7 @@ int main() {
   machine.tapeAlphabet().setBlank(".");
 
   machine.setFinalStates({"q2"});
-  // Multi track example
+  // Simple example
   machine.addTransition("q0", {{"0"}}, "q1", {{"0"}}, {turing::Move::Right});
   machine.addTransition("q0", {{"0"}}, "q1", {{"0"}}, {turing::Move::Right});
   machine.addTransition("q0", {{"0"}}, "q1", {{"0"}}, {turing::Move::Right});
@@ -79,7 +79,7 @@ int main() {
   //
   // tape.write({"a", "a"});
 
-  std::string input_string = "00100";
+  std::string input_string = "0010";
   bool result = machine.run(input_string);
 
   std::cout << "String " << input_string << " accepted: " << std::boolalpha << result

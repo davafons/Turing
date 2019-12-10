@@ -32,6 +32,33 @@ std::string to_string(const Move &move) {
   }
 }
 
+std::ostream &operator<<(std::ostream &os, const Cell &cell) {
+  if (cell.empty()) {
+    os << "[ (empty) ]";
+    return os;
+  }
+
+  os << "[";
+  for (const auto &symbol : cell) {
+    os << symbol << "|";
+  }
+  os << "\b]";
+
+  return os;
+}
+
+std::ostream &operator<<(std::ostream &os, const std::vector<Cell> &cells) {
+  if (cells.empty()) {
+    os << "[ (empty) ]";
+    return os;
+  }
+
+  for (const auto &cell : cells) {
+    os << cell;
+  }
+  return os;
+}
+
 /*!
  *  Symbol used to represent "blank".
  */

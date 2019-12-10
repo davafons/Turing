@@ -115,6 +115,8 @@ bool Turing::run(const std::string& input_string) {
 
   State* current_state = initial_state_;
 
+  std::cout << *this << std::endl;
+
   return run(current_state, tapes_);
 }
 
@@ -132,15 +134,7 @@ bool Turing::run(State* current_state, std::vector<Tape>& tapes) {
     input_symbols.push_back(tape.peek());
   }
 
-  std::cout << "> Input symbols: \n[";
-  for (const auto& cell : input_symbols) {
-    std::cout << "(";
-    for (const auto& symbol : cell) {
-      std::cout << symbol << ", ";
-    }
-    std::cout << "\b\b), ";
-  }
-  std::cout << "\b\b]" << std::endl;
+  std::cout << "\n> Input symbols: " << input_symbols << std::endl;
 
   for (const auto& transition : current_state->transitions(input_symbols)) {
     std::cout << transition << std::endl;

@@ -106,31 +106,14 @@ std::ostream& operator<<(std::ostream& os, const Transition& t) {
   // os << "(" << t.input_symbol_ << ", " << t.stack_symbol_ << ") => {"
   //    << t.next_state_->name() << ", " << t.new_stack_symbols_ << "}";
   //
-  os << "(";
-
-  for (const auto& cell : t.input_symbols_) {
-    os << "[";
-    for (const auto& symbol : cell) {
-      os << symbol << ", ";
-    }
-    os << "\b\b], ";
-  }
-
-  os << "\b\b) => { " << t.nextStateName() << ", ";
-
-  for (const auto& cell : t.output_symbols_) {
-    os << "[";
-    for (const auto& symbol : cell) {
-      os << symbol << ", ";
-    }
-    os << "\b\b], ";
-  }
+  os << t.input_symbols_ << " => { " << t.nextStateName() << ", " << t.output_symbols_
+     << ", ";
 
   for (const auto& mov : t.moves_) {
-    os << "[" << to_string(mov) << "], ";
+    os << "[" << to_string(mov) << "]";
   }
 
-  os << "\b\b}";
+  os << " }";
 
   return os;
 }
