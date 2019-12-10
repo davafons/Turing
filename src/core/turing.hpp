@@ -22,9 +22,9 @@ public:
 
   // States
   State* state(const std::string& name);
-  bool hasState(const std::string& name);
+  bool hasState(const std::string& name) const;
 
-  const State* startState() const;
+  const State* initialState() const;
   void setInitialState(const std::string& name);
 
   void setFinalStates(const std::vector<std::string>& state_names);

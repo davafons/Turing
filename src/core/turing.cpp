@@ -48,11 +48,11 @@ State* Turing::state(const std::string& name) {
   }
 }
 
-bool Turing::hasState(const std::string& name) {
+bool Turing::hasState(const std::string& name) const {
   return states_.count(name);
 }
 
-const State* Turing::startState() const {
+const State* Turing::initialState() const {
   return initial_state_;
 }
 
@@ -119,6 +119,11 @@ bool Turing::run(const std::string& input_string) {
 }
 
 bool Turing::run(State* current_state, std::vector<Tape>& tapes) {
+  // Exit if the current state is null
+  if (!current_state) {
+    return false;
+  }
+
   // Helper function to print the state of the Turing machine
   auto print_turing = [&current_state, &tapes] {
     std::cout << "---------------------------" << std::endl;
@@ -127,16 +132,14 @@ bool Turing::run(State* current_state, std::vector<Tape>& tapes) {
     std::cout << "---------------------------" << std::endl;
   };
 
-  if (!current_state) {
-    return false;
-  }
-
+  // Return true if the Turing machine arrived a Final state
   if (current_state->isFinal()) {
     if (debugMode()) {
       std::cout << "---------------------------" << std::endl;
       std::cout << current_state->name() << " is a Final state." << std::endl;
       std::cout << "---------------------------" << std::endl;
     }
+
     return true;
   }
 
@@ -144,36 +147,39 @@ bool Turing::run(State* current_state, std::vector<Tape>& tapes) {
     print_turing();
   }
 
+  // Collect all symbols from all tapes for each current head
   std::vector<Cell> input_symbols;
   for (const auto& tape : tapes) {
     input_symbols.push_back(tape.peek());
   }
 
+  // Explore transitions for the current tape symbols.
   for (const auto& transition : current_state->transitions(input_symbols)) {
     if (debugMode()) {
       std::cout << "> Transition: " << transition << std::endl;
     }
 
-    // For each transition, clone the tapes and call this method recursively.
+    // For each transition, clone the tapes and call this run method recursively.
     std::vector<Tape> new_tapes(tapes);
     State* new_state = transition.nextState(new_tapes);
 
-    // Check if exploring this transition the Turing machine recognizes the string.
+    // Check if by exploring this transition the Turing machine can accept the string.
     bool result = run(new_state, new_tapes);
 
-    // If the string is recognized, return true to stop execution.
+    // If the string is accepted, return true to stop execution.
     if (result) {
       return true;
     }
 
+    // Otherwise, explore the other transitions
     if (debugMode()) {
       std::cout << ">> Can't continue. Going back to previous state." << std::endl;
       print_turing();
     }
   }
 
-  // If all the transitions have been exhausted, and we're not on a final state, just
-  // reutn false
+  // If all the transitions have been explored, but we still aren't on a final state,
+  // just return false
   return false;
 }
 
