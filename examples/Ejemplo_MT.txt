@@ -1,6 +1,6 @@
-# Ejemplo de una MT
+# Ejemplo de una MT simple
 # Reconoce cadenas binarias con un número impar de 0
-1 1
+1
 q0 q1 q2
 0 1
 0 1 .

@@ -34,6 +34,23 @@ std::string to_string(const Move &move) {
   }
 }
 
+Move to_Move(std::string move_str) {
+  std::transform(move_str.begin(), move_str.end(), move_str.begin(), ::tolower);
+  if (move_str == "left" || move_str == "l") {
+    return Move::Left;
+  }
+
+  if (move_str == "right" || move_str == "r") {
+    return Move::Right;
+  }
+
+  if (move_str == "stop" || move_str == "s") {
+    return Move::Stop;
+  }
+
+  return Move::Stop;
+}
+
 std::ostream &operator<<(std::ostream &os, const std::vector<Symbol> &symbols) {
   if (symbols.empty()) {
     os << "[ (empty) ]";
@@ -53,7 +70,7 @@ std::ostream &operator<<(std::ostream &os, const std::vector<Symbol> &symbols) {
 std::ostream &operator<<(std::ostream &os, const std::vector<Tape> &tapes) {
   for (int i = 0; i < tapes.size(); ++i) {
     os << "Tape " << i << std::endl;
-    os << tapes[i];
+    os << tapes[i] << std::endl;
   }
 
   return os;
@@ -74,7 +91,10 @@ std::vector<std::string> Utils::split(const std::string &str, char delimiter) {
 
   Symbol symbol;
   while (std::getline(symbols_stream, symbol, delimiter)) {
-    result.push_back(symbol);
+    symbol = Utils::trim(symbol);
+    if (!symbol.empty()) {
+      result.push_back(symbol);
+    }
   }
   return result;
 }

@@ -7,7 +7,7 @@
 namespace turing {
 
 Turing::Turing(int num_tapes) {
-  tapes_ = std::vector<Tape>(num_tapes, Tape(tape_alphabet_));
+  setNumTapes(num_tapes);
 }
 
 Turing::~Turing() {
@@ -18,6 +18,10 @@ Turing::~Turing() {
 
 int Turing::numTapes() const {
   return tapes_.size();
+}
+
+void Turing::setNumTapes(int num_tapes) {
+  tapes_ = std::vector<Tape>(num_tapes, Tape(tape_alphabet_));
 }
 
 Alphabet& Turing::tapeAlphabet() {
@@ -72,6 +76,10 @@ void Turing::setFinalStates(const std::vector<std::string>& state_names) {
 }
 
 void Turing::addState(const std::string& name) {
+  if (name.empty()) {
+    return;
+  }
+
   if (states_.count(name)) {
     std::cerr << "> WARNING: A state with name \"" << name
               << "\" already exists. The state WILL NOT be replaced." << std::endl;
@@ -84,6 +92,42 @@ void Turing::addStates(const std::vector<std::string>& state_names) {
   for (const auto& name : state_names) {
     addState(name);
   }
+}
+
+void Turing::addTransition(const std::string& transition_str) {
+  std::stringstream transition_stream(transition_str);
+
+  std::string initial_state_name;
+  transition_stream >> initial_state_name;
+
+  std::vector<Symbol> input_symbols;
+  for (int i = 0; i < numTapes(); ++i) {
+    std::string symbol;
+    transition_stream >> symbol;
+    input_symbols.push_back(symbol);
+  }
+
+  std::string end_state_name;
+  transition_stream >> end_state_name;
+
+  std::vector<Symbol> output_symbols;
+  for (int i = 0; i < numTapes(); ++i) {
+    std::string symbol;
+    transition_stream >> symbol;
+    output_symbols.push_back(symbol);
+  }
+
+  std::vector<Move> moves;
+
+  std::string move_str;
+  while (std::getline(transition_stream, move_str)) {
+    for (const auto& m : Utils::split(move_str, ' ')) {
+      moves.push_back(to_Move(m));
+    }
+  }
+
+  addTransition(
+      initial_state_name, input_symbols, end_state_name, output_symbols, moves);
 }
 
 void Turing::addTransition(const std::string& initial_state_name,
@@ -180,8 +224,7 @@ bool Turing::run(State* current_state, std::vector<Tape>& tapes) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Turing& machine) {
-  os << "> Turing machine with: " << machine.numTapes() << " tapes." << std::endl;
-
+  os << "> Turing machine: " << machine.numTapes() << " tapes." << std::endl;
   os << "> States: ";
 
   for (const auto& s : machine.states_) {

@@ -12,6 +12,7 @@ public:
   ~Turing();
 
   int numTapes() const;
+  void setNumTapes(int num_tapes);
 
   Alphabet& tapeAlphabet();
   const Alphabet& tapeAlphabet() const;
@@ -32,6 +33,7 @@ public:
   void addStates(const std::vector<std::string>& names_str);
 
   // Transitions
+  void addTransition(const std::string& transition_str);
   void addTransition(const std::string& initial_state_name,
                      const std::vector<Symbol>& input_symbols,
                      const std::string& end_state_name,
