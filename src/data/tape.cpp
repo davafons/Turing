@@ -78,7 +78,7 @@ std::ostream& operator<<(std::ostream& os, const Tape& tape) {
   // Write indices
   os << " ";
   for (int i = first_cell_idx; i <= last_cell_idx; ++i) {
-    os << i << "   ";
+    os << i << std::setw(4);
   }
   os << "\n";
 

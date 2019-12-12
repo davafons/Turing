@@ -175,8 +175,8 @@ bool Turing::run(State* current_state, std::vector<Tape>& tapes) {
   // Return true if the Turing machine arrived a Final state
   if (current_state->isFinal()) {
     if (debugMode()) {
-      std::cout << "---------------------------" << std::endl;
-      std::cout << current_state->name() << " is a Final state." << std::endl;
+      print_turing();
+      std::cout << "> " << current_state->name() << " is a Final state." << std::endl;
       std::cout << "---------------------------" << std::endl;
     }
 

@@ -6,6 +6,8 @@
 # "ab"s encontrado hasta ahora es par (X) o impar (Y). La cadena es aceptada si tras
 # leerla hay una X en la memoria
 
+# Con esta máquina se demuestra que la implementación es capaz de manejar multicinta.
+
 2
 q0 q1 q2
 a b c

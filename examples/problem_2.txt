@@ -1,0 +1,36 @@
+# Problema 2
+# MT que reciba como parámetro una cadena binaria y sustituya en la cinta la cadena
+# original por uan subcadena con los ceros de la cadena inicial y después con uan
+# subcadena con los unos de la cadena inicial, dejando un símbolo blanco en medio de cada
+# bloque
+
+3
+q0 q1 q2 q3
+0 1
+0 1 .
+q0
+.
+q3
+
+# Recorre la cadena de entrada, escribiendo los 0s en la Cinta 1 y los 1s en la Cinta 2
+q0 0 . . q0 0 0 . R R S
+q0 1 . . q0 1 . 1 R S R
+q0 . . . q1 . . . L S L
+
+# Escribe todos los 1s de la Cinta 2 en la cadena de entrada
+q1 0 . 1 q1 1 . 1 L S L
+q1 1 . 1 q1 1 . 1 L S L
+q1 . . 1 q1 1 . 1 L s L
+
+# Después de recorrer toda la Cinta2, escribe un espacio
+q1 0 . . q2 . . . L L S
+q1 1 . . q2 . . . L L S
+
+# Escribe todos los 0s de la Cinta 1 en la cadena de entrada
+q2 0 0 . q2 0 0 . L L S
+q2 1 0 . q2 0 0 . L L S
+q2 . 0 . q2 0 0 . L L S
+
+# La máquina de turing termina cuando se hayan recorrido las tres cintas
+q1 . . . q3 . . . R S S
+q2 . . . q3 . . . R S S
