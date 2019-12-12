@@ -44,6 +44,7 @@ Symbol Alphabet::blank() const noexcept {
 
 /*!
  *  Set a new blank Symbol to the alphabet.
+ *  The blank symbol can't be a symbol already on the alphabet.
  */
 void Alphabet::setBlank(Symbol blank) {
   if (blank == blank_) {
@@ -85,7 +86,7 @@ void Alphabet::addSymbol(Symbol symbol) {
   if (!alphabet_symbols_.count(symbol)) {
     alphabet_symbols_.insert(symbol);
 
-    regex_ = std::regex(regexStr());
+  regex_ = std::regex(regexStr());
   }
 }
 
@@ -139,6 +140,7 @@ std::vector<Symbol> Alphabet::splitInSymbols(const std::string &symbols_str) con
 std::ostream &operator<<(std::ostream &os, const Alphabet &alphabet) {
   std::string alphabet_symbols(alphabet.regexStr());
   std::replace(alphabet_symbols.begin(), alphabet_symbols.end(), '|', ' ');
+  std::replace(alphabet_symbols.begin(), alphabet_symbols.end(), '\\', ' ');
 
   os << alphabet_symbols;
 
@@ -155,7 +157,7 @@ std::string Alphabet::regexStr() const {
 
   for (auto it = next(alphabet_symbols_.cbegin()); it != alphabet_symbols_.cend();
        ++it) {
-    regex_str += "|" + *it;
+    regex_str += "|\\" + *it;
   }
 
   return regex_str;

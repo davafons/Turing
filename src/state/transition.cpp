@@ -25,36 +25,36 @@ Transition::Transition(const std::vector<Symbol>& input_symbols,
       moves_(moves) {}
 
 /*!
- *  Symbol needed by the tape for the transition.
+ *  Symbol needed by the Tape(s) for the transition.
  */
 std::vector<Symbol> Transition::inputSymbols() const {
   return input_symbols_;
 }
 
 /*!
- *  Symbols written to the stack when transitioning.
+ *  Symbols written to the Tape(s) when transitioning.
  */
 std::vector<Symbol> Transition::outputSymbols() const {
   return output_symbols_;
 }
 
 /*!
- *  Movement done by the Tape upon transitioning.
+ *  Movement done by the Tape(s) upon transitioning.
  */
 std::vector<Move> Transition::moves() const {
   return moves_;
 }
 
 /*!
- *  Name of the next state to transition.
+ *  Name of the next state to which transition.
  */
 std::string Transition::nextStateName() const {
   return (next_state_) ? next_state_->name() : "";
 }
 
 /*!
- *  Move to the next state and return it, modifying the tape and the stack on the
- *  process.
+ *  Move to the next state and return it, modifying the Tape(s) on the process.
+ *  If the transition couldn't be performed, return null.
  */
 State* Transition::nextState(std::vector<Tape>& tapes) const {
   // Must have the same amout of symbols that tapes (To write on each one)
@@ -81,8 +81,8 @@ State* Transition::nextState(std::vector<Tape>& tapes) const {
 
 /*!
  *  Check if two transitions are equal.
- *  Note: For two transitions to be equal, they must have the same symbols, and point to
- *  the same "next_state_" objet.
+ *  Note: For two transitions to be equal, they must have the same symbols, movements,
+ *  and point to the same state.
  */
 bool Transition::operator==(const Transition& other) const {
   return input_symbols_ == other.input_symbols_ &&
@@ -93,9 +93,9 @@ bool Transition::operator==(const Transition& other) const {
 /*!
  *  Return the Transition as a string.
  */
-std::string Transition::str() const {
+std::string to_string(const Transition& other) {
   std::stringstream ss;
-  ss << *this;
+  ss << other;
   return ss.str();
 }
 

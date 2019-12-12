@@ -28,7 +28,7 @@ public:
 
   State* nextState(std::vector<Tape>& tapes) const;
 
-  std::string str() const;
+  friend std::string to_string(const Transition& other);
 
   bool operator==(const Transition& other) const;
 
@@ -50,7 +50,7 @@ namespace std {
 template <>
 struct hash<turing::Transition> {
   size_t operator()(const turing::Transition& obj) const {
-    return hash<std::string>()(obj.str());
+    return hash<std::string>()(to_string(obj));
   }
 };
 

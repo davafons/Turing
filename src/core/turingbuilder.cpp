@@ -5,6 +5,14 @@
 
 namespace turing {
 
+/*!
+ *  \class TuringBuilder
+ *  \brief Construct a Turing object from different sources (p.e. file)
+ */
+
+/*!
+ *  Construct a Turing machine from a file.
+ */
 Turing TuringBuilder::fromFile(const std::string& file_path) {
   std::ifstream file_stream(file_path);
   if (!file_stream.is_open()) {
@@ -45,7 +53,6 @@ Turing TuringBuilder::fromFile(const std::string& file_path) {
 
     // Read transitions
     line = Utils::nextLine(file_stream);
-
     while (!line.empty()) {
       machine.addTransition(line);
       line = Utils::nextLine(file_stream);

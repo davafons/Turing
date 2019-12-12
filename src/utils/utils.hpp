@@ -7,14 +7,13 @@
 namespace turing {
 
 class Tape;
-
 using Symbol = std::string;
 
 enum class Move { Left, Right, Stop };
 std::string to_string(const Move& move);
 Move to_Move(std::string move_str);
 
-std::ostream& operator<<(std::ostream& os, const std::vector<Symbol>& cell);
+std::ostream& operator<<(std::ostream& os, const std::vector<Symbol>& symbols);
 std::ostream& operator<<(std::ostream& os, const std::vector<Tape>& tapes);
 
 class Utils {

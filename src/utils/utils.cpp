@@ -11,10 +11,8 @@
 namespace turing {
 
 /*!
- *  \class Utils
- *  \brief Utility methods and objects.
+ *  Return the corresponding string for a Move enum
  */
-
 std::string to_string(const Move &move) {
   switch (move) {
     case Move::Left:
@@ -34,6 +32,10 @@ std::string to_string(const Move &move) {
   }
 }
 
+/*!
+ *  Transform the string to a Move enum.
+ *  Case insensitive.
+ */
 Move to_Move(std::string move_str) {
   std::transform(move_str.begin(), move_str.end(), move_str.begin(), ::tolower);
   if (move_str == "left" || move_str == "l") {
@@ -51,6 +53,9 @@ Move to_Move(std::string move_str) {
   return Move::Stop;
 }
 
+/*!
+ *  Output operator for a vector of Symbols (std::strings).
+ */
 std::ostream &operator<<(std::ostream &os, const std::vector<Symbol> &symbols) {
   if (symbols.empty()) {
     os << "[ (empty) ]";
@@ -67,14 +72,10 @@ std::ostream &operator<<(std::ostream &os, const std::vector<Symbol> &symbols) {
   return os;
 }
 
-std::ostream &operator<<(std::ostream &os, const std::vector<Tape> &tapes) {
-  for (int i = 0; i < tapes.size(); ++i) {
-    os << "Tape " << i << std::endl;
-    os << tapes[i] << std::endl;
-  }
-
-  return os;
-}
+/*!
+ *  \class Utils
+ *  \brief Utility methods and objects.
+ */
 
 /*!
  *  Symbol used to represent "blank".

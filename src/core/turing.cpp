@@ -6,40 +6,80 @@
 
 namespace turing {
 
+/*!
+ *  \class Turing
+ *  \brief Turing Machine implementation.
+ *
+ *  By default, can work as a:
+ *  - Non-Deterministic Turing Machine
+ *  - Single-Tape Turing Machine
+ *  - Multi-Tape Turing Machine
+ *  - Multi-Track Turing Machine
+ */
+
+/*!
+ *  Create a Turing machine with the given number of tapes.
+ */
 Turing::Turing(int num_tapes) {
   setNumTapes(num_tapes);
 }
 
+/*!
+ *  Delete the Turing machine.
+ */
 Turing::~Turing() {
   for (const auto& s : states_) {
     delete s.second;
   }
 }
 
+/*!
+ *  Return the number of Tapes of the Turing machine.
+ */
 int Turing::numTapes() const {
   return tapes_.size();
 }
 
+/*!
+ *  Set a new number of Tapes to the Turing Machine.
+ *  !WARNING: Content on the previous tapes will be deleted.
+ */
 void Turing::setNumTapes(int num_tapes) {
   tapes_ = std::vector<Tape>(num_tapes, Tape(tape_alphabet_));
 }
 
+/*!
+ *  Return the alphabet accepted by the Tape.
+ */
 Alphabet& Turing::tapeAlphabet() {
   return tape_alphabet_;
 }
 
+/*!
+ *  Return the alphabet accepted by the Tape.
+ */
 const Alphabet& Turing::tapeAlphabet() const {
   return tape_alphabet_;
 }
 
+/*!
+ *  Return the alphabet accepted by the input string.
+ */
 Alphabet& Turing::inputAlphabet() {
   return input_alphabet_;
 }
 
+/*!
+ *  Return the alphabet accepted by the input string.
+ */
 const Alphabet& Turing::inputAlphabet() const {
   return input_alphabet_;
 }
 
+/*!
+ *  Return a pointer to a State by its name.
+ *  !WARNING: Throw if couldn't find a State called "name".
+ */
 State* Turing::state(const std::string& name) {
   try {
     return states_.at(name);
@@ -48,14 +88,24 @@ State* Turing::state(const std::string& name) {
   }
 }
 
+/*!
+ *  Check if there's a State named "name" defined on the Turing machine.
+ */
 bool Turing::hasState(const std::string& name) const {
   return states_.count(name);
 }
 
+/*!
+ *  Return the initial State of the Turing machine.
+ */
 const State* Turing::initialState() const {
   return initial_state_;
 }
 
+/*!
+ *  Set a new initial State for the Turing machine.
+ *  !WARNING: If the name is empty, set the initial state to null.
+ */
 void Turing::setInitialState(const std::string& name) {
   if (name.empty()) {
     initial_state_ = nullptr;
@@ -64,17 +114,25 @@ void Turing::setInitialState(const std::string& name) {
   }
 }
 
+/*!
+ *  Set the final States for the Turing machine.
+ */
 void Turing::setFinalStates(const std::vector<std::string>& state_names) {
   // First, reset all states to non-final.
   for (const auto& state : states_) {
     state.second->setFinal(false);
   }
 
+  // Then, set the new final states.
   for (const auto& name : state_names) {
     state(name)->setFinal(true);
   }
 }
 
+/*!
+ *  Add a new state called "name" to the Turing machine.
+ *
+ */
 void Turing::addState(const std::string& name) {
   if (name.empty()) {
     return;
@@ -88,12 +146,18 @@ void Turing::addState(const std::string& name) {
   }
 }
 
+/*!
+ *  For each state of "state_names", add it to the Turing machine.
+ */
 void Turing::addStates(const std::vector<std::string>& state_names) {
   for (const auto& name : state_names) {
     addState(name);
   }
 }
 
+/*!
+ *  Parse the transition string and add it to the corresponding State.
+ */
 void Turing::addTransition(const std::string& transition_str) {
   std::stringstream transition_stream(transition_str);
 
@@ -130,6 +194,9 @@ void Turing::addTransition(const std::string& transition_str) {
       initial_state_name, input_symbols, end_state_name, output_symbols, moves);
 }
 
+/*!
+ *  Add transition to the corresponding state.
+ */
 void Turing::addTransition(const std::string& initial_state_name,
                            const std::vector<Symbol>& input_symbols,
                            const std::string& end_state_name,
@@ -141,23 +208,36 @@ void Turing::addTransition(const std::string& initial_state_name,
           Transition(input_symbols, state(end_state_name), output_symbols, moves));
 }
 
-// Turing Machine
+/*!
+ *  Check if the Turing machine is in debug mode (print trace) or not.
+ */
 bool Turing::debugMode() const {
   return debug_mode_;
 }
+
+/*!
+ *  Toggle if the trace should be printed.
+ */
 void Turing::toggleDebugMode(bool toggle) {
   debug_mode_ = toggle;
 }
 
+/*!
+ *  Test the input_string with the curent Turing machine and return if the string was
+ *  accepted or not.
+ */
 bool Turing::run(const std::string& input_string) {
   // Fill initial tape with input string
-  tapes_[0].setInputString(input_string);
+  tapes_[0].setInputString(input_string, input_alphabet_);
 
   State* current_state = initial_state_;
 
   return run(current_state, tapes_);
 }
 
+/*!
+ *  Recursive version of run.
+ */
 bool Turing::run(State* current_state, std::vector<Tape>& tapes) {
   // Exit if the current state is null
   if (!current_state) {
@@ -223,6 +303,9 @@ bool Turing::run(State* current_state, std::vector<Tape>& tapes) {
   return false;
 }
 
+/*!
+ *  Print the Turing Machine.
+ */
 std::ostream& operator<<(std::ostream& os, const Turing& machine) {
   os << "> Turing machine: " << machine.numTapes() << " tapes." << std::endl;
   os << "> States: ";

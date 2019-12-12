@@ -24,9 +24,10 @@ public:
 
   void reset();
 
-  void setInputString(const std::string &input_string);
+  void setInputString(const std::string &input_string, const Alphabet& input_alphabet);
 
   friend std::ostream &operator<<(std::ostream &os, const Tape &tape);
+  friend std::ostream &operator<<(std::ostream &os, const std::vector<Tape> &tapes);
 
 private:
   Symbol at(int idx) const;

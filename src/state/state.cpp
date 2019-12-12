@@ -40,7 +40,7 @@ void State::setFinal(bool f) {
 }
 
 /*!
- *  Return all the transitions associated to these input and stack symbols.
+ *  Return all the transitions associated to these input.
  *  If there aren't any transitions for the symbols, return an empty set.
  */
 std::unordered_set<Transition> &State::transitions(
