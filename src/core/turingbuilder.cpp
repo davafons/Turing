@@ -45,7 +45,10 @@ Turing TuringBuilder::fromFile(const std::string& file_path) {
 
     // Read transitions
     while (std::getline(file_stream, line)) {
-      std::cout << "Adding " << line << std::endl;
+      if (line.empty()) {
+        continue;
+      }
+
       machine.addTransition(line);
     }
 

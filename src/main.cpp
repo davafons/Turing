@@ -40,6 +40,7 @@ int main(int argc, char* argv[]) {
 }
 
 void runTuringMachine(turing::Turing& machine, const std::string& input) {
+  std::cout << machine << std::endl << "-----------------" << std::endl;
   std::cout << "Input: " << input << std::endl;
   bool recognized = machine.run(input);
   std::cout << "Recognized: " << std::boolalpha << recognized << std::endl << std::endl;

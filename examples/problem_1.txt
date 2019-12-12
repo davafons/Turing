@@ -1,0 +1,41 @@
+# Problema 1
+# MT que reconozca el lenguaje L = { w € E* / w = (a | b | c)* ^ la combinación ab se
+# encuentra un número par de veces }
+
+# Utiliza una segunda cinta como "memoria auxiliar" donde va guardando si el número de
+# "ab"s encontrado hasta ahora es par (X) o impar (Y). La cadena es aceptada si tras #
+leerla hay una X en la memoria
+
+2
+q0 q1 q2
+a b c
+a b c X Y .
+q0
+.
+q2
+
+# Rellenar memoria cuando está vacía (al comenzar a leer)
+q0 a . q1 a X R S
+q0 b . q0 b X R S
+q0 c . q0 c X R S
+
+# Pasa a q1 cuando encuentra una "a" (para ver si la siguiente es una b)
+q0 a X q1 a X R S
+q0 a Y q1 a Y R S
+
+# Ignora el resto de caracteres
+q0 b X q0 b X R S
+q0 b Y q0 b Y R S
+q0 c X q0 c X R S
+q0 c Y q0 c Y R S
+q0 . X q2 . X R S
+
+# Si encuentra una "b" (dado que el anterior es a), cambia el símbolo (X~Y)
+q1 b X q0 b Y R S
+q1 b Y q0 b X R S
+
+q1 a X q0 a X R S
+q1 a Y q0 a Y R S
+q1 c X q0 c X R S
+q1 c Y q0 c Y R S
+q1 . X q2 . X R S
