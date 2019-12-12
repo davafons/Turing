@@ -168,7 +168,7 @@ bool Turing::run(State* current_state, std::vector<Tape>& tapes) {
   auto print_turing = [&current_state, &tapes] {
     std::cout << "---------------------------" << std::endl;
     std::cout << "Current state: " << current_state->name() << std::endl;
-    std::cout << tapes << std::endl;
+    std::cout << tapes;
     std::cout << "---------------------------" << std::endl;
   };
 
