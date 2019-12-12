@@ -44,12 +44,11 @@ Turing TuringBuilder::fromFile(const std::string& file_path) {
     machine.setFinalStates(Utils::split(line, ' '));
 
     // Read transitions
-    while (std::getline(file_stream, line)) {
-      if (line.empty()) {
-        continue;
-      }
+    line = Utils::nextLine(file_stream);
 
+    while (!line.empty()) {
       machine.addTransition(line);
+      line = Utils::nextLine(file_stream);
     }
 
   } catch (const std::exception& e) {
