@@ -50,9 +50,13 @@ TEST_F(AlphabetTest, UnrecognizedSymbols) {
   ASSERT_EQ(symbols[1], "b");
 }
 
-TEST_F(AlphabetTest, setSymbols) {
-  alphabet_.reset();
+TEST_F(AlphabetTest, AddSymbol) {
+  alphabet_.addSymbol("d");
 
+  ASSERT_EQ(alphabet_.size(), 4);
+}
+
+TEST_F(AlphabetTest, SetSymbols) {
   alphabet_.setSymbols({"X", "Y"});
 
   auto symbols = alphabet_.splitInSymbols("X Y");
@@ -60,6 +64,21 @@ TEST_F(AlphabetTest, setSymbols) {
   ASSERT_EQ(symbols.size(), 2);
   ASSERT_EQ(symbols[0], "X");
   ASSERT_EQ(symbols[1], "Y");
+}
+
+TEST_F(AlphabetTest, SetBlank) {
+  alphabet_.setBlank("z");
+
+  ASSERT_EQ(alphabet_.blank(), "z");
+}
+
+TEST_F(AlphabetTest, SetExistentBlank) {
+  ASSERT_EQ(alphabet_.blank(), ".");
+
+  // Shouldn't change as "a" is already on the Alphabet
+  alphabet_.setBlank("a");
+
+  ASSERT_EQ(alphabet_.blank(), ".");
 }
 
 }  // namespace turing
