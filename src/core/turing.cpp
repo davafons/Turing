@@ -161,9 +161,11 @@ void Turing::addStates(const std::vector<std::string>& state_names) {
 void Turing::addTransition(const std::string& transition_str) {
   std::stringstream transition_stream(transition_str);
 
+  // Read initial state
   std::string initial_state_name;
   transition_stream >> initial_state_name;
 
+  // Read transition symbols
   std::vector<Symbol> input_symbols;
   for (int i = 0; i < numTapes(); ++i) {
     std::string symbol;
@@ -171,9 +173,11 @@ void Turing::addTransition(const std::string& transition_str) {
     input_symbols.push_back(symbol);
   }
 
+  // Read end state
   std::string end_state_name;
   transition_stream >> end_state_name;
 
+  // Read new symbols to write
   std::vector<Symbol> output_symbols;
   for (int i = 0; i < numTapes(); ++i) {
     std::string symbol;
@@ -181,6 +185,7 @@ void Turing::addTransition(const std::string& transition_str) {
     output_symbols.push_back(symbol);
   }
 
+  // Read moves
   std::vector<Move> moves;
 
   std::string move_str;
@@ -190,6 +195,7 @@ void Turing::addTransition(const std::string& transition_str) {
     }
   }
 
+  // Finally, add new transition
   addTransition(
       initial_state_name, input_symbols, end_state_name, output_symbols, moves);
 }

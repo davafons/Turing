@@ -16,7 +16,7 @@ q0
 .
 q2
 
-# Rellenar memoria cuando está vacía (al comenzar a leer)
+# Rellenar memoria con una X cuando está vacía (al comenzar a leer)
 q0 a . q1 a X R S
 q0 b . q0 b X R S
 q0 c . q0 c X R S
@@ -30,7 +30,7 @@ q0 b X q0 b X R S
 q0 b Y q0 b Y R S
 q0 c X q0 c X R S
 q0 c Y q0 c Y R S
-q0 . X q2 . X R S
+q0 . X q2 . X L S
 
 # Si encuentra una "b" (dado que el anterior es a), cambia el símbolo (X~Y)
 q1 b X q0 b Y R S
@@ -40,4 +40,4 @@ q1 a X q1 a X R S
 q1 a Y q1 a Y R S
 q1 c X q0 c X R S
 q1 c Y q0 c Y R S
-q1 . X q2 . X R S
+q1 . X q2 . X L S

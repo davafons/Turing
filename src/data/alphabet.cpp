@@ -60,8 +60,7 @@ void Alphabet::setBlank(Symbol blank) {
 
     // Set new one
     blank_ = blank;
-    addSymbol(blank_);
-  }
+    }
 }
 
 /*!
@@ -86,7 +85,7 @@ void Alphabet::addSymbol(Symbol symbol) {
   if (!alphabet_symbols_.count(symbol)) {
     alphabet_symbols_.insert(symbol);
 
-  regex_ = std::regex(regexStr());
+    regex_ = std::regex(regexStr());
   }
 }
 
@@ -94,11 +93,17 @@ void Alphabet::addSymbol(Symbol symbol) {
  *  Add a new set of symbols to the Alphabet.
  */
 void Alphabet::addSymbols(const std::vector<Symbol> &symbols) {
+  alphabet_symbols_.clear();
+
   for (const auto &symbol : symbols) {
     alphabet_symbols_.insert(symbol);
   }
 
   regex_ = std::regex(regexStr());
+
+  for (const auto &r : alphabet_symbols_) {
+    std::cout << r << std::endl;
+  }
 }
 
 /*!
@@ -153,12 +158,14 @@ std::ostream &operator<<(std::ostream &os, const Alphabet &alphabet) {
 std::string Alphabet::regexStr() const {
   std::string regex_str;
 
-  regex_str += *alphabet_symbols_.cbegin();
+  regex_str += "(" + *alphabet_symbols_.cbegin() + ")";
 
   for (auto it = next(alphabet_symbols_.cbegin()); it != alphabet_symbols_.cend();
        ++it) {
-    regex_str += "|\\" + *it;
+    regex_str += "|(" + *it + ")";
   }
+
+  std::cout << regex_str << std::endl;
 
   return regex_str;
 }

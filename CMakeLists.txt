@@ -30,7 +30,7 @@ fetch_googletest(
 )
 
 enable_testing()
-# add_subdirectory(tests)
+add_subdirectory(tests)
 
 # Code Coverage Configuration
 add_library(coverage_config INTERFACE)
