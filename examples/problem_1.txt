@@ -36,6 +36,7 @@ q0 . X q2 . X L S
 q1 b X q0 b Y R S
 q1 b Y q0 b X R S
 
+# Ignora el resto de caracteres
 q1 a X q1 a X R S
 q1 a Y q1 a Y R S
 q1 c X q0 c X R S
