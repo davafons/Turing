@@ -23,7 +23,7 @@ Tape::Tape(const Alphabet& alphabet) : alphabet_(alphabet) {}
  *  Return the Alphabet associated with this Tape.
  */
 const Alphabet& Tape::alphabet() const {
-  return alphabet_;
+  return alphabet_.get();
 }
 
 /*
@@ -47,9 +47,8 @@ Symbol Tape::peek() const {
  *  alphabet.
  */
 void Tape::write(Symbol symbol) {
-  if (!alphabet_.contains(symbol) && symbol != alphabet_.blank()) {
-    throw std::runtime_error("Can't write Symbol " + symbol +
-                             ". Not in Alphabet.");  // TODO: Print alphabet
+  if (!alphabet_.get().contains(symbol) && symbol != alphabet_.get().blank()) {
+    throw std::runtime_error("Can't write Symbol " + symbol + ". Not in Alphabet.");
   }
 
   data_[tape_head_] = symbol;
@@ -110,7 +109,7 @@ void Tape::setInputString(const std::string& input_line,
  */
 Symbol Tape::at(int idx) const {
   if (!data_.count(idx)) {
-    return alphabet_.blank();
+    return alphabet_.get().blank();
   }
 
   return data_.at(idx);

@@ -33,11 +33,11 @@ Turing TuringBuilder::fromFile(const std::string& file_path) {
 
     // Input Alphabet
     line = Utils::nextLine(file_stream);
-    machine.inputAlphabet().addSymbols(Utils::split(line, ' '));
+    machine.inputAlphabet().setSymbols(Utils::split(line, ' '));
 
     // Tape Alphabet
     line = Utils::nextLine(file_stream);
-    machine.tapeAlphabet().addSymbols(Utils::split(line, ' '));
+    machine.tapeAlphabet().setSymbols(Utils::split(line, ' '));
 
     // Initial State
     line = Utils::nextLine(file_stream);

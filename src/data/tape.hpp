@@ -24,7 +24,7 @@ public:
 
   void reset();
 
-  void setInputString(const std::string &input_string, const Alphabet& input_alphabet);
+  void setInputString(const std::string &input_string, const Alphabet &input_alphabet);
 
   friend std::ostream &operator<<(std::ostream &os, const Tape &tape);
   friend std::ostream &operator<<(std::ostream &os, const std::vector<Tape> &tapes);
@@ -36,7 +36,7 @@ private:
   int tape_head_{0};
   std::map<int, Symbol> data_;
 
-  const Alphabet &alphabet_;
+  std::reference_wrapper<const Alphabet> alphabet_;
 };
 
 }  // namespace turing

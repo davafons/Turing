@@ -11,10 +11,7 @@ protected:
     s1_ = new State("s1");
     s2_ = new State("s2");
 
-    tape_.alphabet().addSymbols("0 1");
-    tape_.setInputString("01");
-
-    transition_ = Transition({"0"}, {"1"}, s2_, Move::Left);
+    transition_ = Transition({"0"}, s2_, {"1"}, {Move::Left});
   }
 
   void TearDown() override {
@@ -23,13 +20,12 @@ protected:
   }
 
   Transition transition_;
-  Tape<1> tape_;
 
   State* s1_;
   State* s2_;
 };
 
-// TEST_F(TransitionTest, InputSymbol) { ASSERT_EQ(transition_.inputSymbol(), "0"); }
+TEST_F(TransitionTest, InputSymbol) { ASSERT_EQ(transition_.inputSymbol(), "0"); }
 //
 // TEST_F(TransitionTest, StackSymbol) { ASSERT_EQ(transition_.stackSymbol(), "A"); }
 //

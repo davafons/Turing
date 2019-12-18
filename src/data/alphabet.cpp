@@ -60,7 +60,7 @@ void Alphabet::setBlank(Symbol blank) {
 
     // Set new one
     blank_ = blank;
-    }
+  }
 }
 
 /*!
@@ -90,9 +90,9 @@ void Alphabet::addSymbol(Symbol symbol) {
 }
 
 /*!
- *  Add a new set of symbols to the Alphabet.
+ *  Set a new set of symbols to the Alphabet.
  */
-void Alphabet::addSymbols(const std::vector<Symbol> &symbols) {
+void Alphabet::setSymbols(const std::vector<Symbol> &symbols) {
   alphabet_symbols_.clear();
 
   for (const auto &symbol : symbols) {

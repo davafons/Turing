@@ -24,7 +24,7 @@ public:
   bool contains(Symbol symbol) const;
 
   void addSymbol(Symbol symbol);
-  void addSymbols(const std::vector<Symbol> &symbols);
+  void setSymbols(const std::vector<Symbol> &symbols);
 
   std::vector<Symbol> splitInSymbols(const std::string &symbols_str) const;
 

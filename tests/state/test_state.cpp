@@ -43,16 +43,16 @@ TEST_F(StateTest, getTransitions) {
 }
 
 TEST_F(StateTest, addTransition) {
-  s1_->addTransition(Transition({"a"}, {"c"}, s2_, Move::Left));
-  s1_->addTransition(Transition({"a"}, {"c"}, s1_, Move::Right));
+  s1_->addTransition(Transition({"a"}, s2_, {"c"}, {Move::Left}));
+  s1_->addTransition(Transition({"a"}, s1_, {"c"}, {Move::Right}));
 
   auto transitions = s1_->transitions({"a"});
   ASSERT_EQ(transitions.size(), 2);
 }
 
 TEST_F(StateTest, addDuplicatedTransition) {
-  s1_->addTransition(Transition({"a"}, {"c"}, s2_, Move::Left));
-  s1_->addTransition(Transition({"a"}, {"c"}, s2_, Move::Left));
+  s1_->addTransition(Transition({"a"}, s2_, {"c"}, {Move::Left}));
+  s1_->addTransition(Transition({"a"}, s2_, {"c"}, {Move::Left}));
 
   auto transitions = s1_->transitions({"a"});
 

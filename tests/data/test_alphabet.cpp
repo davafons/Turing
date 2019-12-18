@@ -5,7 +5,7 @@ namespace turing {
 
 class AlphabetTest : public ::testing::Test {
 protected:
-  void SetUp() override { alphabet_.addSymbols({"a", "b", "c"}); }
+  void SetUp() override { alphabet_.setSymbols({"a", "b", "c"}); }
 
   Alphabet alphabet_;
 };
@@ -50,10 +50,10 @@ TEST_F(AlphabetTest, UnrecognizedSymbols) {
   ASSERT_EQ(symbols[1], "b");
 }
 
-TEST_F(AlphabetTest, addSymbols) {
+TEST_F(AlphabetTest, setSymbols) {
   alphabet_.reset();
 
-  alphabet_.addSymbols({"X", "Y"});
+  alphabet_.setSymbols({"X", "Y"});
 
   auto symbols = alphabet_.splitInSymbols("X Y");
 
