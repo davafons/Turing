@@ -100,10 +100,6 @@ void Alphabet::setSymbols(const std::vector<Symbol> &symbols) {
   }
 
   regex_ = std::regex(regexStr());
-
-  for (const auto &r : alphabet_symbols_) {
-    std::cout << r << std::endl;
-  }
 }
 
 /*!

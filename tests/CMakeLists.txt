@@ -1,7 +1,7 @@
 add_executable(test_turing)
 
 add_subdirectory(data)
-# add_subdirectory(state)
+add_subdirectory(state)
 
 target_link_libraries(test_turing turinglib coverage_config gtest_main)
 
