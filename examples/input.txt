@@ -1,0 +1,4 @@
+abcab
+acb
+ccc
+abcacb

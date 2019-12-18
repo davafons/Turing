@@ -41,11 +41,11 @@ Turing TuringBuilder::fromFile(const std::string& file_path) {
 
     // Initial State
     line = Utils::nextLine(file_stream);
-    machine.setInitialState(line);
+    machine.setInitialState(Utils::trim(line));
 
     // Blank symbol
     line = Utils::nextLine(file_stream);
-    machine.tapeAlphabet().setBlank(line);
+    machine.tapeAlphabet().setBlank(Utils::trim(line));
 
     // Final states
     line = Utils::nextLine(file_stream);

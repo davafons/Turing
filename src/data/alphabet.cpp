@@ -161,8 +161,6 @@ std::string Alphabet::regexStr() const {
     regex_str += "|(" + *it + ")";
   }
 
-  std::cout << regex_str << std::endl;
-
   return regex_str;
 }
 

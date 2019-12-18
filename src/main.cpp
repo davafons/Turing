@@ -1,4 +1,5 @@
 #include <boost/program_options.hpp>
+#include <fstream>
 #include <iostream>
 
 #include "core/turing.hpp"
@@ -29,7 +30,25 @@ int main(int argc, char* argv[]) {
     turing::Turing machine = turing::TuringBuilder::fromFile(options.turing_file);
     machine.toggleDebugMode(options.debug_mode);
 
-    runTuringMachine(machine, options.input);
+    if (machine.debugMode()) {
+      std::cout << machine << std::endl << "-----------------" << std::endl;
+    }
+
+    // Try to open the input as a file. If fails, execute is as an input sequence.
+    std::ifstream input_file(options.input);
+    if (input_file.is_open()) {
+
+      // Run the automata for each line.
+      std::string line = turing::Utils::nextLine(input_file);
+
+      while (!line.empty()) {
+        runTuringMachine(machine, line);
+        line = turing::Utils::nextLine(input_file);
+      }
+
+    } else {  // Run the input as a string if couldn't be opened as a file
+      runTuringMachine(machine, options.input);
+    }
 
   } catch (const std::exception& e) {
     std::cerr << e.what() << std::endl;
@@ -40,7 +59,6 @@ int main(int argc, char* argv[]) {
 }
 
 void runTuringMachine(turing::Turing& machine, const std::string& input) {
-  std::cout << machine << std::endl << "-----------------" << std::endl;
   std::cout << "Input: " << input << std::endl;
   bool recognized = machine.run(input);
   std::cout << "Recognized: " << std::boolalpha << recognized << std::endl << std::endl;
