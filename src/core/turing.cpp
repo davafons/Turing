@@ -49,6 +49,13 @@ void Turing::setNumTapes(int num_tapes) {
 }
 
 /*!
+ *  Return a copy of the Turing machine tapes.
+ */
+std::vector<Tape> Turing::tapes() const {
+  return tapes_;
+}
+
+/*!
  *  Return the alphabet accepted by the Tape.
  */
 Alphabet& Turing::tapeAlphabet() {
@@ -265,6 +272,8 @@ bool Turing::run(State* current_state, std::vector<Tape>& tapes) {
       std::cout << "> " << current_state->name() << " is a Final state." << std::endl;
       std::cout << "---------------------------" << std::endl;
     }
+
+    tapes_ = tapes;
 
     return true;
   }

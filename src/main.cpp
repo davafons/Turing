@@ -4,6 +4,7 @@
 
 #include "core/turing.hpp"
 #include "core/turingbuilder.hpp"
+#include "utils/utils.hpp"
 
 namespace po = boost::program_options;
 
@@ -62,6 +63,7 @@ void runTuringMachine(turing::Turing& machine, const std::string& input) {
   std::cout << "Input: " << input << std::endl;
   bool recognized = machine.run(input);
   std::cout << "Recognized: " << std::boolalpha << recognized << std::endl << std::endl;
+  std::cout << machine.tapes() << std::endl;
 }
 
 bool parseArguments(int argc, char* argv[], Options& options) {

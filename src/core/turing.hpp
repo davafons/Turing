@@ -14,6 +14,8 @@ public:
   int numTapes() const;
   void setNumTapes(int num_tapes);
 
+  std::vector<Tape> tapes() const;
+
   Alphabet& tapeAlphabet();
   const Alphabet& tapeAlphabet() const;
 
